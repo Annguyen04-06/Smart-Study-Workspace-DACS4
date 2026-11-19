@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<html lang="vi" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <title>Smart Study Workspace — Không gian Học tập Nhóm Thông minh VKU</title>
+    <!-- PWA & Mobile Optimization -->
+    <link rel="manifest" href="./manifest.webmanifest" />
+    <meta name="theme-color" content="#4f46e5" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="SmartStudy" />
+    <link rel="apple-touch-icon" href="./src/assets/icons/apple-touch-icon.png" />
+    <link rel="icon" type="image/svg+xml" href="./src/assets/icons/icon.svg" />
+    <link rel="alternate icon" type="image/png" href="./src/assets/icons/favicon.png" />
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>tailwind.config = { darkMode: 'class' };</script>
+    <link rel="stylesheet" href="./src/assets/styles/variables.css" />
+    <link rel="stylesheet" href="./src/assets/styles/components.css" />
+    <link rel="stylesheet" href="./src/assets/styles/animations.css" />
+    <link rel="stylesheet" href="./src/assets/styles/mobile-native.css" />
+</head>
+<body class="min-h-screen bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 flex flex-col overflow-x-hidden selection:bg-indigo-500 selection:text-white">
+
+    <!-- =========================================================================
+         FLOATING PILL GLASS NAVBAR (THANH ĐIỀU HƯỚNG NỔI KÍNH MỜ HIỆN ĐẠI)
+         ========================================================================= -->
+    <div class="pt-safe-plus sticky top-0 z-50 px-3 sm:px-6 pt-3">
+        <header class="mx-auto max-w-7xl rounded-2xl border border-slate-200/80 dark:border-slate-800/90 bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl shadow-lg shadow-slate-900/[0.04]">
+            <div class="flex h-15 py-2.5 items-center justify-between px-4 sm:px-6">
+                <a href="./index.html" class="flex items-center gap-3 group">
+                    <span class="flex h-10 w-10 items-center justify-center rounded-xl btn-primary-glow shadow-md shadow-indigo-500/30 group-hover:scale-105 transition">
+                        <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/>
+                        </svg>
+                    </span>
+                    <div class="hidden sm:block">
+                        <span class="text-base font-black tracking-tight text-slate-900 dark:text-white group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition">Smart Study</span>
+                        <span class="ml-1.5 rounded-md bg-indigo-50 dark:bg-indigo-500/20 border border-indigo-200/70 dark:border-indigo-400/30 px-1.5 py-0.5 text-[10px] font-extrabold uppercase tracking-wider text-indigo-700 dark:text-indigo-300">VKU</span>
+                    </div>
+                </a>
+
+                <nav class="hidden md:flex items-center gap-7 text-xs font-bold text-slate-600 dark:text-slate-300">
+                    <a href="#features-bento" class="hover:text-indigo-600 dark:hover:text-indigo-400 transition">Hệ sinh thái AI</a>
+                    <a href="#interactive-3d-section" class="hover:text-indigo-600 dark:hover:text-indigo-400 transition">Trải nghiệm Thẻ 3D</a>
+                    <a href="#live-rooms-marquee" class="hover:text-indigo-600 dark:hover:text-indigo-400 transition">11 Phòng học VKU</a>
+                    <a href="#workflow-timeline" class="hover:text-indigo-600 dark:hover:text-indigo-400 transition">Quy trình 3 bước</a>
+                </nav>
+
+                <div class="flex items-center gap-2">
+                    <div id="pwa-install-container" class="inline-flex items-center"></div>
+                    <button id="landing-theme-toggle" type="button"
+                        class="flex h-9 w-9 items-center justify-center rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-600 dark:text-amber-300 hover:border-indigo-400 transition"
+                        title="Đổi giao diện Sáng / Tối">
+                        ◐
+                    </button>
+                    <div id="landing-nav-actions" class="flex items-center gap-2"></div>
+                </div>
+            </div>
+        </header>
+    </div>
+
+    <main class="flex-1">
+        <!-- =========================================================================
+             HERO SECTION: AURORA SPHERES + SHIMMER HEADLINE + 3D TILT INTERACTIVE WORKSPACE
+             ========================================================================= -->
+        <section class="relative overflow-hidden bg-grid-slate dark:bg-grid-dark pt-12 pb-20 sm:pt-16 sm:pb-28">
+            <!-- Các khối cầu ánh sáng Aurora đa tầng -->
+            <div class="pointer-events-none absolute -top-32 left-1/2 -translate-x-1/2 h-[480px] w-[860px] rounded-full bg-gradient-to-r from-indigo-500/25 via-purple-500/20 to-cyan-400/20 blur-3xl animate-aurora"></div>
+            <div class="pointer-events-none absolute top-72 -left-24 h-80 w-80 rounded-full bg-fuchsia-500/10 blur-3xl"></div>
+            <div class="pointer-events-none absolute top-64 -right-24 h-80 w-80 rounded-full bg-emerald-400/15 blur-3xl"></div>
+
+            <div class="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+                <!-- Tiêu đề Trung tâm -->
+                <div class="mx-auto max-w-4xl text-center reveal-up is-visible">
+                    <div class="inline-flex items-center gap-2.5 rounded-full border border-indigo-200/90 dark:border-indigo-500/30 bg-white/90 dark:bg-slate-900/90 px-4 py-1.5 text-xs font-bold text-indigo-700 dark:text-indigo-300 shadow-sm backdrop-blur">
+                        <span class="relative flex h-2.5 w-2.5">
+                            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                            <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500"></span>
+                        </span>
+                        <span>Không gian Học tập Số Thế hệ Mới dành cho Sinh viên CNTT VKU</span>
+                    </div>
+
+                    <h1 class="mt-6 text-4xl font-black tracking-tight text-slate-900 dark:text-white sm:text-6xl lg:text-[66px] leading-[1.07]">
+                        Chinh Phục Mọi Học Phần Cùng
+                        <span class="block mt-1.5 text-shimmer-gradient">
+                            Trợ Giảng AI Thời Gian Thực
+                        </span>
+                    </h1>
+
+                    <p class="mx-auto mt-6 max-w-2xl text-base sm:text-lg text-slate-600 dark:text-slate-300 leading-relaxed">
+                        Hợp nhất thảo luận nhóm trực tuyến, bóc tách &amp; tóm tắt giáo trình PDF tiếng Việt, hỏi đáp sâu cùng <code class="rounded-lg bg-indigo-50 dark:bg-indigo-500/20 border border-indigo-200/70 dark:border-indigo-400/30 px-2 py-0.5 font-mono text-sm font-bold text-indigo-700 dark:text-indigo-300">@bot</code>, đồng hồ Pomodoro đồng bộ và thi thử đua Top vương miện.
+                    </p>
+
+                    <div class="mt-9 flex flex-wrap items-center justify-center gap-4">
+                        <a id="hero-primary-cta" href="./pages/auth/login.html"
+                            class="btn-primary-glow inline-flex items-center gap-2.5 rounded-2xl px-8 py-4 text-sm font-extrabold shadow-xl shadow-indigo-600/30 hover:scale-[1.02] transition">
+                            <span>Bắt đầu Học Ngay</span>
+                            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.4"><path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6"/></svg>
+                        </a>
+                        <a id="hero-secondary-cta" href="./pages/auth/register.html"
+                            class="inline-flex items-center gap-2 rounded-2xl border border-slate-300/90 dark:border-slate-700 bg-white/90 dark:bg-slate-900/90 px-7 py-4 text-sm font-bold text-slate-800 dark:text-slate-100 shadow-sm hover:border-indigo-400 hover:text-indigo-600 dark:hover:text-indigo-300 transition">
+                            <span>Tạo tài khoản Sinh viên</span>
+                        </a>
+                    </div>
+
+                    <div class="mt-8 flex flex-wrap items-center justify-center gap-3 text-xs text-slate-500 dark:text-slate-400">
+                        <div class="flex -space-x-2.5">
+                            <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=NguyenVanAn" alt="" class="h-8 w-8 rounded-full bg-indigo-100 ring-2 ring-white dark:ring-slate-950" />
+                            <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=TranThiBinh" alt="" class="h-8 w-8 rounded-full bg-emerald-100 ring-2 ring-white dark:ring-slate-950" />
+                            <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=VoThaoVy" alt="" class="h-8 w-8 rounded-full bg-amber-100 ring-2 ring-white dark:ring-slate-950" />
+                            <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=DangQuocBao" alt="" class="h-8 w-8 rounded-full bg-purple-100 ring-2 ring-white dark:ring-slate-950" />
+                            <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=BuiThanhTruc" alt="" class="h-8 w-8 rounded-full bg-sky-100 ring-2 ring-white dark:ring-slate-950" />
+                        </div>
+                        <span>Hơn <strong>11 phòng học chuyên ngành</strong> từ Mạng máy tính, Đồ thị, AI đến An toàn thông tin &amp; Cloud</span>
+                    </div>
+                </div>
+
+                <!-- =================================================================
+                     SÂN KHẤU 3D TILT TƯƠNG TÁC TRỰC TIẾP (INTERACTIVE 3D HERO STAGE)
+                     ================================================================= -->
+                <div id="hero-tilt-stage" class="hero-tilt-stage relative mt-14 mx-auto max-w-6xl">
+                    <!-- Huy hiệu vệ tinh bay nổi 1 (Trái trên): Đồng hồ Pomodoro đếm giây thật -->
+                    <div class="animate-float-slow hidden xl:flex items-center gap-3 absolute -left-6 -top-5 z-20 rounded-2xl border border-indigo-200/90 dark:border-indigo-500/30 bg-white/95 dark:bg-slate-900/95 px-4 py-2.5 shadow-xl backdrop-blur">
+                        <span class="flex h-9 w-9 items-center justify-center rounded-xl bg-indigo-600 text-white text-sm shadow-md shadow-indigo-600/30">⏱</span>
+                        <div>
+                            <p class="text-[10px] font-extrabold uppercase tracking-wider text-indigo-600 dark:text-indigo-400">Pomodoro Đồng bộ Nhóm</p>
+                            <p class="font-mono text-sm font-black text-slate-900 dark:text-white">Focus &bull; <span id="landing-live-pomo">24:59</span></p>
+                        </div>
+                    </div>
+
+                    <!-- Huy hiệu vệ tinh bay nổi 2 (Phải dưới): Pháo giấy đạt điểm 10 -->
+                    <div class="animate-float-delayed hidden xl:flex items-center gap-3 absolute -right-5 -bottom-5 z-20 rounded-2xl border border-emerald-200/90 dark:border-emerald-500/30 bg-white/95 dark:bg-slate-900/95 px-4 py-2.5 shadow-xl backdrop-blur">
+                        <span class="flex h-9 w-9 items-center justify-center rounded-xl bg-emerald-500 text-white text-sm shadow-md shadow-emerald-500/30">👑</span>
+                        <div>
+                            <p class="text-[10px] font-extrabold uppercase tracking-wider text-emerald-600 dark:text-emerald-400">Đạt Điểm Tuyệt Đối</p>
+                            <p class="text-xs font-extrabold text-slate-900 dark:text-white">Nguyễn Văn An &bull; 10.0/10 Đề Đồ thị</p>
+                        </div>
+                    </div>
+
+                    <!-- Khung cửa sổ Workspace 3D -->
+                    <div id="hero-tilt-window" class="hero-tilt-window rounded-3xl border border-slate-200/95 dark:border-slate-800 bg-white/95 dark:bg-slate-900/95 p-2.5 sm:p-4 shadow-2xl shadow-indigo-950/15 backdrop-blur">
+                        <!-- Thanh tiêu đề cửa sổ + 3 Tab Chuyển đổi Trực tiếp -->
+                        <div class="flex flex-wrap items-center justify-between gap-3 border-b border-slate-100 dark:border-slate-800 px-3 sm:px-4 pb-3 mb-3">
+                            <div class="flex items-center gap-2">
+                                <span class="h-3 w-3 rounded-full bg-rose-400"></span>
+                                <span class="h-3 w-3 rounded-full bg-amber-400"></span>
+                                <span class="h-3 w-3 rounded-full bg-emerald-400"></span>
+                                <span class="ml-2 font-mono text-xs font-bold text-slate-500 dark:text-slate-400">Workspace &bull; #NET101</span>
+                            </div>
+
+                            <!-- 3 nút bấm chuyển chế độ xem thử ngay trên Trang chủ -->
+                            <div class="flex items-center rounded-xl bg-slate-100 dark:bg-slate-800/90 p-1 gap-1">
+                                <button type="button" data-hero-demo-tab="chat"
+                                    class="rounded-lg bg-white dark:bg-slate-900 px-3 py-1 text-[11px] font-bold text-indigo-700 dark:text-indigo-300 shadow-xs transition">
+                                    💬 Thảo luận &amp; @bot
+                                </button>
+                                <button type="button" data-hero-demo-tab="quiz"
+                                    class="rounded-lg px-3 py-1 text-[11px] font-semibold text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white transition">
+                                    🎯 Thi Trắc nghiệm AI
+                                </button>
+                                <button type="button" data-hero-demo-tab="leaderboard"
+                                    class="rounded-lg px-3 py-1 text-[11px] font-semibold text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white transition">
+                                    🏆 Bảng Xếp Hạng
+                                </button>
+                            </div>
+
+                            <span class="hidden sm:inline-flex items-center gap-1.5 rounded-full bg-emerald-50 dark:bg-emerald-500/15 px-3 py-1 text-[11px] font-bold text-emerald-700 dark:text-emerald-300">
+                                <span class="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse"></span> 9 Thành viên Online
+                            </span>
+                        </div>
+
+                        <!-- Khung 3 cột sống động -->
+                        <div class="grid grid-cols-1 lg:grid-cols-12 gap-3.5 bg-slate-50/80 dark:bg-slate-950/70 rounded-2xl p-3">
+                            <!-- Cột 1: Sidebar Phòng học -->
+                            <div class="hidden lg:flex lg:col-span-3 flex-col justify-between rounded-2xl mesh-dark-surface p-4 text-white">
+                                <div class="space-y-3">
+                                    <span class="inline-block rounded-md bg-indigo-500/25 border border-indigo-400/25 px-2.5 py-0.5 text-[10px] font-bold text-indigo-200">Lập trình Mạng</span>
+                                    <p class="text-sm font-extrabold leading-snug">Lập trình Mạng nâng cao với SignalR &amp; WebSockets</p>
+                                    <div class="flex items-center justify-between rounded-xl bg-slate-950/60 border border-white/10 px-3 py-1.5 font-mono text-xs text-indigo-300">
+                                        <span>#NET101</span>
+                                        <span class="text-[10px] text-emerald-300">Mã mời</span>
+                                    </div>
+                                </div>
+                                <div class="mt-5 space-y-2 pt-3 border-t border-white/10 text-xs">
+                                    <div class="flex items-center justify-between text-slate-200">
+                                        <span class="flex items-center gap-2"><span class="h-2 w-2 rounded-full bg-emerald-400"></span> Nguyễn Văn An</span>
+                                        <span class="text-[10px] text-indigo-300 font-semibold">Owner</span>
+                                    </div>
+                                    <div class="flex items-center justify-between text-slate-300">
+                                        <span class="flex items-center gap-2"><span class="h-2 w-2 rounded-full bg-emerald-400"></span> Trần Thị Bình</span>
+                                        <span class="text-[10px] text-emerald-400">Online</span>
+                                    </div>
+                                    <div class="flex items-center justify-between text-slate-300">
+                                        <span class="flex items-center gap-2"><span class="h-2 w-2 rounded-full bg-emerald-400"></span> Võ Thảo Vy</span>
+                                        <span class="text-[10px] text-emerald-400">Online</span>
+                                    </div>
+                                    <div class="flex items-center justify-between text-slate-300">
+                                        <span class="flex items-center gap-2"><span class="h-2 w-2 rounded-full bg-emerald-400"></span> Đặng Quốc Bảo</span>
+                                        <span class="text-[10px] text-emerald-400">Online</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Cột 2 + 3 động theo Tab người dùng chọn trên Hero -->
+                            <div class="lg:col-span-9">
+                                <!-- PANEL 1: CHAT & @BOT -->
+                                <div data-hero-demo-panel="chat" class="grid grid-cols-1 md:grid-cols-12 gap-3.5">
+                                    <div class="md:col-span-7 rounded-2xl border border-slate-200/80 dark:border-slate-800 bg-white dark:bg-slate-900 p-4 space-y-3">
+                                        <div class="flex items-center justify-between rounded-xl bg-amber-50 dark:bg-amber-500/10 border border-amber-200/80 dark:border-amber-500/25 px-3 py-1.5 text-[11px] font-bold text-amber-900 dark:text-amber-300">
+                                            <span>📌 Đã ghim: Đối chiếu giao thức TCP vs UDP</span>
+                                            <span class="text-[10px] underline">Mở nhanh</span>
+                                        </div>
+                                        <div class="flex justify-end">
+                                            <div class="rounded-2xl rounded-tr-sm bg-gradient-to-r from-indigo-600 to-violet-600 px-3.5 py-2 text-xs text-white shadow-sm">
+                                                <span class="rounded bg-white/20 px-1.5 py-0.5 font-mono text-[10px] font-bold mr-1">@bot</span>
+                                                So sánh kích thước Header UDP và công thức cửa sổ gửi hiệu dụng TCP?
+                                            </div>
+                                        </div>
+                                        <div class="rounded-2xl border border-indigo-200/80 dark:border-indigo-500/30 bg-slate-50/90 dark:bg-slate-950/85 p-3.5 space-y-2.5">
+                                            <div class="flex items-center justify-between">
+                                                <div class="flex items-center gap-2">
+                                                    <span class="flex h-6 w-6 items-center justify-center rounded-lg bg-gradient-to-br from-indigo-600 to-violet-600 text-[10px] font-bold text-white">AI</span>
+                                                    <span class="text-xs font-extrabold text-indigo-700 dark:text-indigo-300">Trợ giảng AI (@bot)</span>
+                                                </div>
+                                                <span class="text-[10px] font-semibold text-emerald-600 dark:text-emerald-400">Đối chiếu từ PDF ✓</span>
+                                            </div>
+                                            <p class="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
+                                                Gói tin <strong>UDP</strong> có Header cố định siêu nhẹ chỉ <strong>8 bytes</strong>, trong khi <strong>TCP</strong> từ <strong>20–60 bytes</strong> và giới hạn lượng gửi theo:
+                                            </p>
+                                            <div class="rounded-xl bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 py-2 px-3 text-center font-mono text-xs font-extrabold text-indigo-700 dark:text-indigo-300">
+                                                W_effective = min(rwnd, cwnd)
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="md:col-span-5 rounded-2xl border border-slate-200/80 dark:border-slate-800 bg-white dark:bg-slate-900 p-4 flex flex-col justify-between space-y-3">
+                                        <div class="space-y-2.5">
+                                            <span class="text-[11px] font-extrabold uppercase tracking-wider text-slate-500">Kho Học liệu Phòng</span>
+                                            <div class="rounded-xl border border-slate-200/80 dark:border-slate-800 p-3 bg-slate-50/70 dark:bg-slate-800/50">
+                                                <p class="text-xs font-bold text-slate-900 dark:text-white">📄 Chuyên đề 1: Kiến trúc SignalR &amp; WebSockets</p>
+                                                <p class="mt-1 text-[11px] text-slate-500">22 trang &bull; Đã tóm tắt trọng tâm AI</p>
+                                            </div>
+                                            <div class="rounded-xl border border-slate-200/80 dark:border-slate-800 p-3 bg-slate-50/70 dark:bg-slate-800/50">
+                                                <p class="text-xs font-bold text-slate-900 dark:text-white">📄 Chuyên đề 2: TCP, UDP &amp; Chống tắc nghẽn</p>
+                                                <p class="mt-1 text-[11px] text-slate-500">19 trang &bull; Sẵn sàng tạo Quiz &amp; Thẻ 3D</p>
+                                            </div>
+                                        </div>
+                                        <div class="rounded-xl bg-indigo-50 dark:bg-indigo-500/15 border border-indigo-200/70 dark:border-indigo-400/30 px-3 py-2 text-[11px] font-semibold text-indigo-700 dark:text-indigo-300 text-center">
+                                            🖨️ Hỗ trợ Xuất Phiếu Đề cương Ôn tập PDF 1 chạm
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- PANEL 2: THI TRẮC NGHIỆM AI -->
+                                <div data-hero-demo-panel="quiz" class="hidden rounded-2xl border border-slate-200/80 dark:border-slate-800 bg-white dark:bg-slate-900 p-5 space-y-4">
+                                    <div class="flex items-center justify-between border-b border-slate-100 dark:border-slate-800 pb-3">
+                                        <div>
+                                            <span class="rounded-md bg-amber-100 dark:bg-amber-500/20 px-2 py-0.5 text-[10px] font-bold text-amber-800 dark:text-amber-300">Độ khó: Vừa (Medium)</span>
+                                            <p class="mt-1 text-sm font-extrabold text-slate-900 dark:text-white">Câu 3 / 10: Thứ tự ưu tiên chuyển đổi dự phòng (Transport Fallback) trong SignalR là gì?</p>
+                                        </div>
+                                        <span class="shrink-0 rounded-xl bg-rose-50 dark:bg-rose-500/15 px-3 py-1.5 font-mono text-xs font-black text-rose-600 dark:text-rose-300">⏳ 11:42</span>
+                                    </div>
+                                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5 text-xs">
+                                        <div class="rounded-xl border border-slate-200 dark:border-slate-800 p-3 text-slate-600 dark:text-slate-300">A. Long Polling &rarr; SSE &rarr; WebSockets</div>
+                                        <div class="rounded-xl border-2 border-emerald-500 bg-emerald-50/70 dark:bg-emerald-500/15 p-3 font-bold text-emerald-800 dark:text-emerald-200">B. WebSockets &rarr; Server-Sent Events &rarr; Long Polling ✓</div>
+                                        <div class="rounded-xl border border-slate-200 dark:border-slate-800 p-3 text-slate-600 dark:text-slate-300">C. UDP Multicast &rarr; HTTP/1.0</div>
+                                        <div class="rounded-xl border border-slate-200 dark:border-slate-800 p-3 text-slate-600 dark:text-slate-300">D. Chỉ hỗ trợ duy nhất HTTP Polling</div>
+                                    </div>
+                                    <p class="rounded-xl bg-indigo-50/80 dark:bg-indigo-500/10 px-3.5 py-2.5 text-xs text-indigo-800 dark:text-indigo-200">
+                                        💡 <strong>Giải thích AI:</strong> WebSockets song công toàn phần có độ trễ thấp nhất (&lt;10ms) nên luôn được ưu tiên hàng đầu trước khi lùi về SSE và Long Polling.
+                                    </p>
+                                </div>
+
+                                <!-- PANEL 3: BẢNG XẾP HẠNG VƯƠNG MIỆN -->
+                                <div data-hero-demo-panel="leaderboard" class="hidden rounded-2xl border border-slate-200/80 dark:border-slate-800 bg-white dark:bg-slate-900 p-5 space-y-3">
+                                    <div class="flex items-center justify-between">
+                                        <p class="text-sm font-extrabold text-slate-900 dark:text-white">🏆 Bảng Vinh Danh Thi Đua Phòng #NET101</p>
+                                        <span class="text-xs font-semibold text-indigo-600 dark:text-indigo-400">Cập nhật tức thì sau mỗi lượt thi</span>
+                                    </div>
+                                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-1">
+                                        <div class="rounded-2xl border border-amber-300/80 bg-gradient-to-b from-amber-50 to-white dark:from-amber-500/15 dark:to-slate-900 p-4 text-center">
+                                            <span class="text-2xl">👑</span>
+                                            <p class="mt-1 text-xs font-extrabold text-slate-900 dark:text-white">Nguyễn Văn An</p>
+                                            <p class="font-mono text-xs font-bold text-amber-600 dark:text-amber-300">Hạng 1 &bull; 10.0 đ</p>
+                                        </div>
+                                        <div class="rounded-2xl border border-slate-200 dark:border-slate-700 bg-slate-50/70 dark:bg-slate-800/60 p-4 text-center">
+                                            <span class="text-2xl">🥈</span>
+                                            <p class="mt-1 text-xs font-extrabold text-slate-900 dark:text-white">Bùi Thanh Trúc</p>
+                                            <p class="font-mono text-xs font-bold text-slate-600 dark:text-slate-300">Hạng 2 &bull; 9.0 đ</p>
+                                        </div>
+                                        <div class="rounded-2xl border border-orange-200/80 dark:border-orange-500/30 bg-orange-50/50 dark:bg-orange-500/10 p-4 text-center">
+                                            <span class="text-2xl">🥉</span>
+                                            <p class="mt-1 text-xs font-extrabold text-slate-900 dark:text-white">Trần Thị Bình</p>
+                                            <p class="font-mono text-xs font-bold text-orange-700 dark:text-orange-300">Hạng 3 &bull; 9.0 đ</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- =================================================================
+                     4 THẺ CHỈ SỐ ĐẾM SỐ ĐỘNG KHI CUỘN TỚI (ANIMATED SCROLL COUNTERS)
+                     ================================================================= -->
+                <div class="mt-14 grid grid-cols-2 lg:grid-cols-4 gap-4 max-w-5xl mx-auto">
+                    <div class="saas-card spotlight-card p-6 text-center reveal-up" style="--reveal-delay: 0ms;">
+                        <p class="font-mono text-3xl sm:text-4xl font-black text-indigo-600 dark:text-indigo-400" data-counter-target="22" data-counter-suffix=" Phòng">0</p>
+                        <p class="mt-1.5 text-xs font-bold text-slate-600 dark:text-slate-300">Phòng học Chuyên ngành VKU</p>
+                    </div>
+                    <div class="saas-card spotlight-card p-6 text-center reveal-up" style="--reveal-delay: 90ms;">
+                        <p class="font-mono text-3xl sm:text-4xl font-black text-violet-600 dark:text-violet-400" data-counter-target="24" data-counter-suffix=" PDF">0</p>
+                        <p class="mt-1.5 text-xs font-bold text-slate-600 dark:text-slate-300">Giáo trình &amp; Bản tóm tắt AI</p>
+                    </div>
+                    <div class="saas-card spotlight-card p-6 text-center reveal-up" style="--reveal-delay: 180ms;">
+                        <p class="font-mono text-3xl sm:text-4xl font-black text-emerald-600 dark:text-emerald-400" data-counter-target="220" data-counter-suffix="+">0</p>
+                        <p class="mt-1.5 text-xs font-bold text-slate-600 dark:text-slate-300">Thảo luận &amp; Kiến thức Đã Ghim</p>
+                    </div>
+                    <div class="saas-card spotlight-card p-6 text-center reveal-up" style="--reveal-delay: 270ms;">
+                        <p class="font-mono text-3xl sm:text-4xl font-black text-amber-500" data-counter-target="99" data-counter-suffix="%">0</p>
+                        <p class="mt-1.5 text-xs font-bold text-slate-600 dark:text-slate-300">Tốc độ Phản hồi Thời gian thực</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- =========================================================================
+             INFINITE MARQUEE RIBBON: BĂNG CHUYỀN VÔ TẬN 11 PHÒNG HỌC VKU
+             ========================================================================= -->
+        <section id="live-rooms-marquee" class="py-12 border-y border-slate-200/80 dark:border-slate-800 bg-white dark:bg-slate-900/60 overflow-hidden">
+            <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 mb-6 flex items-center justify-between">
+                <p class="text-xs font-extrabold uppercase tracking-widest text-slate-500 dark:text-slate-400">
+                    20+ Phòng học Chuyên ngành Sẵn sàng Tham gia bằng 1 chạm hoặc Mã mời
+                </p>
+                <a data-auth-cta href="./pages/auth/login.html" class="text-xs font-bold text-indigo-600 dark:text-indigo-400 hover:underline">
+                    Mở Sảnh 20+ Phòng học &rarr;
+                </a>
+            </div>
+
+            <div class="marquee-mask space-y-3.5">
+                <!-- Dải chạy sang trái -->
+                <div class="marquee-track-left gap-3.5 pr-3.5">
+                    <a data-auth-cta href="./pages/auth/login.html" class="flex items-center gap-3 rounded-2xl border border-slate-200 dark:border-slate-800 bg-slate-50/90 dark:bg-slate-900 px-4 py-3 hover:border-indigo-400 transition">
+                        <span class="rounded-lg bg-indigo-600 px-2.5 py-1 font-mono text-xs font-bold text-white">#NET101</span>
+                        <div><p class="text-xs font-bold text-slate-900 dark:text-white">Lập trình Mạng &amp; SignalR</p><p class="text-[11px] text-slate-500">9 thành viên &bull; 2 PDF</p></div>
+                    </a>
+                    <a data-auth-cta href="./pages/auth/login.html" class="flex items-center gap-3 rounded-2xl border border-slate-200 dark:border-slate-800 bg-slate-50/90 dark:bg-slate-900 px-4 py-3 hover:border-emerald-400 transition">
+                        <span class="rounded-lg bg-emerald-600 px-2.5 py-1 font-mono text-xs font-bold text-white">#DSA202</span>
+                        <div><p class="text-xs font-bold text-slate-900 dark:text-white">Cấu trúc Dữ liệu &amp; Đồ thị</p><p class="text-[11px] text-slate-500">8 thành viên &bull; 2 PDF</p></div>
+                    </a>
+                    <a data-auth-cta href="./pages/auth/login.html" class="flex items-center gap-3 rounded-2xl border border-slate-200 dark:border-slate-800 bg-slate-50/90 dark:bg-slate-900 px-4 py-3 hover:border-violet-400 transition">
+                        <span class="rounded-lg bg-violet-600 px-2.5 py-1 font-mono text-xs font-bold text-white">#AI305</span>
+                        <div><p class="text-xs font-bold text-slate-900 dark:text-white">Trí tuệ Nhân tạo &amp; Học máy</p><p class="text-[11px] text-slate-500">10 thành viên &bull; Tìm kiếm A*</p></div>
+                    </a>
+                    <a data-auth-cta href="./pages/auth/login.html" class="flex items-center gap-3 rounded-2xl border border-slate-200 dark:border-slate-800 bg-slate-50/90 dark:bg-slate-900 px-4 py-3 hover:border-sky-400 transition">
+                        <span class="rounded-lg bg-sky-600 px-2.5 py-1 font-mono text-xs font-bold text-white">#SQL204</span>
+                        <div><p class="text-xs font-bold text-slate-900 dark:text-white">Tối ưu Truy vấn SQL Server</p><p class="text-[11px] text-slate-500">7 thành viên &bull; B+Tree Index</p></div>
+                    </a>
+                    <a data-auth-cta href="./pages/auth/login.html" class="flex items-center gap-3 rounded-2xl border border-slate-200 dark:border-slate-800 bg-slate-50/90 dark:bg-slate-900 px-4 py-3 hover:border-amber-400 transition">
+                        <span class="rounded-lg bg-amber-600 px-2.5 py-1 font-mono text-xs font-bold text-white">#MAT108</span>
+                        <div><p class="text-xs font-bold text-slate-900 dark:text-white">Toán Rời rạc &amp; Tổ hợp</p><p class="text-[11px] text-slate-500">6 thành viên &bull; Master Theorem</p></div>
+                    </a>
+                    <a data-auth-cta href="./pages/auth/login.html" class="flex items-center gap-3 rounded-2xl border border-slate-200 dark:border-slate-800 bg-slate-50/90 dark:bg-slate-900 px-4 py-3 hover:border-rose-400 transition">
+                        <span class="rounded-lg bg-rose-600 px-2.5 py-1 font-mono text-xs font-bold text-white">#OS209</span>
+                        <div><p class="text-xs font-bold text-slate-900 dark:text-white">Hệ điều hành Linux &amp; Tiến trình</p><p class="text-[11px] text-slate-500">6 thành viên &bull; Chống Deadlock</p></div>
+                    </a>
+                    <!-- Nhân bản chu kỳ 2 để cuộn liền mạch không đứt quãng -->
+                    <a data-auth-cta href="./pages/auth/login.html" class="flex items-center gap-3 rounded-2xl border border-slate-200 dark:border-slate-800 bg-slate-50/90 dark:bg-slate-900 px-4 py-3 hover:border-indigo-400 transition">
+                        <span class="rounded-lg bg-indigo-600 px-2.5 py-1 font-mono text-xs font-bold text-white">#NET101</span>
+                        <div><p class="text-xs font-bold text-slate-900 dark:text-white">Lập trình Mạng &amp; SignalR</p><p class="text-[11px] text-slate-500">9 thành viên &bull; 2 PDF</p></div>
+                    </a>
+                    <a data-auth-cta href="./pages/auth/login.html" class="flex items-center gap-3 rounded-2xl border border-slate-200 dark:border-slate-800 bg-slate-50/90 dark:bg-slate-900 px-4 py-3 hover:border-emerald-400 transition">
+                        <span class="rounded-lg bg-emerald-600 px-2.5 py-1 font-mono text-xs font-bold text-white">#DSA202</span>
+                        <div><p class="text-xs font-bold text-slate-900 dark:text-white">Cấu trúc Dữ liệu &amp; Đồ thị</p><p class="text-[11px] text-slate-500">8 thành viên &bull; 2 PDF</p></div>
+                    </a>
+                    <a data-auth-cta href="./pages/auth/login.html" class="flex items-center gap-3 rounded-2xl border border-slate-200 dark:border-slate-800 bg-slate-50/90 dark:bg-slate-900 px-4 py-3 hover:border-violet-400 transition">
+                        <span class="rounded-lg bg-violet-600 px-2.5 py-1 font-mono text-xs font-bold text-white">#AI305</span>
+                        <div><p class="text-xs font-bold text-slate-900 dark:text-white">Trí tuệ Nhân tạo &amp; Học máy</p><p class="text-[11px] text-slate-500">10 thành viên &bull; Tìm kiếm A*</p></div>
+                    </a>
+                    <a data-auth-cta href="./pages/auth/login.html" class="flex items-center gap-3 rounded-2xl border border-slate-200 dark:border-slate-800 bg-slate-50/90 dark:bg-slate-900 px-4 py-3 hover:border-sky-400 transition">
+                        <span class="rounded-lg bg-sky-600 px-2.5 py-1 font-mono text-xs font-bold text-white">#SQL204</span>
+                        <div><p class="text-xs font-bold text-slate-900 dark:text-white">Tối ưu Truy vấn SQL Server</p><p class="text-[11px] text-slate-500">7 thành viên &bull; B+Tree Index</p></div>
+                    </a>
+                    <a data-auth-cta href="./pages/auth/login.html" class="flex items-center gap-3 rounded-2xl border border-slate-200 dark:border-slate-800 bg-slate-50/90 dark:bg-slate-900 px-4 py-3 hover:border-amber-400 transition">
+                        <span class="rounded-lg bg-amber-600 px-2.5 py-1 font-mono text-xs font-bold text-white">#MAT108</span>
+                        <div><p class="text-xs font-bold text-slate-900 dark:text-white">Toán Rời rạc &amp; Tổ hợp</p><p class="text-[11px] text-slate-500">6 thành viên &bull; Master Theorem</p></div>
+                    </a>
+                    <a data-auth-cta href="./pages/auth/login.html" class="flex items-center gap-3 rounded-2xl border border-slate-200 dark:border-slate-800 bg-slate-50/90 dark:bg-slate-900 px-4 py-3 hover:border-rose-400 transition">
+                        <span class="rounded-lg bg-rose-600 px-2.5 py-1 font-mono text-xs font-bold text-white">#OS209</span>
+                        <div><p class="text-xs font-bold text-slate-900 dark:text-white">Hệ điều hành Linux &amp; Tiến trình</p><p class="text-[11px] text-slate-500">6 thành viên &bull; Chống Deadlock</p></div>
+                    </a>
+                </div>
+
+                <!-- Dải chạy ngược sang phải -->
+                <div class="marquee-track-right gap-3.5 pr-3.5">
+                    <a data-auth-cta href="./pages/auth/login.html" class="flex items-center gap-3 rounded-2xl border border-slate-200 dark:border-slate-800 bg-slate-50/90 dark:bg-slate-900 px-4 py-3 hover:border-indigo-400 transition">
+                        <span class="rounded-lg bg-fuchsia-600 px-2.5 py-1 font-mono text-xs font-bold text-white">#WEB301</span>
+                        <div><p class="text-xs font-bold text-slate-900 dark:text-white">Phát triển Web &amp; RESTful API</p><p class="text-[11px] text-slate-500">6 thành viên &bull; HTTP/2 &amp; CORS</p></div>
+                    </a>
+                    <a data-auth-cta href="./pages/auth/login.html" class="flex items-center gap-3 rounded-2xl border border-slate-200 dark:border-slate-800 bg-slate-50/90 dark:bg-slate-900 px-4 py-3 hover:border-teal-400 transition">
+                        <span class="rounded-lg bg-teal-600 px-2.5 py-1 font-mono text-xs font-bold text-white">#SEC308</span>
+                        <div><p class="text-xs font-bold text-slate-900 dark:text-white">An toàn Thông tin &amp; Mật mã RSA</p><p class="text-[11px] text-slate-500">7 thành viên &bull; OWASP Top 10</p></div>
+                    </a>
+                    <a data-auth-cta href="./pages/auth/login.html" class="flex items-center gap-3 rounded-2xl border border-slate-200 dark:border-slate-800 bg-slate-50/90 dark:bg-slate-900 px-4 py-3 hover:border-cyan-400 transition">
+                        <span class="rounded-lg bg-cyan-600 px-2.5 py-1 font-mono text-xs font-bold text-white">#CLD405</span>
+                        <div><p class="text-xs font-bold text-slate-900 dark:text-white">Điện toán Đám mây &amp; Docker</p><p class="text-[11px] text-slate-500">6 thành viên &bull; Đường ống CI/CD</p></div>
+                    </a>
+                    <a data-auth-cta href="./pages/auth/login.html" class="flex items-center gap-3 rounded-2xl border border-slate-200 dark:border-slate-800 bg-slate-50/90 dark:bg-slate-900 px-4 py-3 hover:border-indigo-400 transition">
+                        <span class="rounded-lg bg-indigo-700 px-2.5 py-1 font-mono text-xs font-bold text-white">#SWE206</span>
+                        <div><p class="text-xs font-bold text-slate-900 dark:text-white">Công nghệ Phần mềm &amp; SOLID</p><p class="text-[11px] text-slate-500">6 thành viên &bull; Thiết kế Hướng ĐT</p></div>
+                    </a>
+                    <a data-auth-cta href="./pages/auth/login.html" class="flex items-center gap-3 rounded-2xl border border-slate-200 dark:border-slate-800 bg-slate-50/90 dark:bg-slate-900 px-4 py-3 hover:border-orange-400 transition">
+                        <span class="rounded-lg bg-orange-600 px-2.5 py-1 font-mono text-xs font-bold text-white">#IOT310</span>
+                        <div><p class="text-xs font-bold text-slate-900 dark:text-white">Hệ thống Nhúng IoT &amp; ESP32</p><p class="text-[11px] text-slate-500">5 thành viên &bull; Giao thức MQTT</p></div>
+                    </a>
+                    <!-- Nhân bản chu kỳ 2 -->
+                    <a data-auth-cta href="./pages/auth/login.html" class="flex items-center gap-3 rounded-2xl border border-slate-200 dark:border-slate-800 bg-slate-50/90 dark:bg-slate-900 px-4 py-3 hover:border-indigo-400 transition">
+                        <span class="rounded-lg bg-fuchsia-600 px-2.5 py-1 font-mono text-xs font-bold text-white">#WEB301</span>
+                        <div><p class="text-xs font-bold text-slate-900 dark:text-white">Phát triển Web &amp; RESTful API</p><p class="text-[11px] text-slate-500">6 thành viên &bull; HTTP/2 &amp; CORS</p></div>
+                    </a>
+                    <a data-auth-cta href="./pages/auth/login.html" class="flex items-center gap-3 rounded-2xl border border-slate-200 dark:border-slate-800 bg-slate-50/90 dark:bg-slate-900 px-4 py-3 hover:border-teal-400 transition">
+                        <span class="rounded-lg bg-teal-600 px-2.5 py-1 font-mono text-xs font-bold text-white">#SEC308</span>
+                        <div><p class="text-xs font-bold text-slate-900 dark:text-white">An toàn Thông tin &amp; Mật mã RSA</p><p class="text-[11px] text-slate-500">7 thành viên &bull; OWASP Top 10</p></div>
+                    </a>
+                    <a data-auth-cta href="./pages/auth/login.html" class="flex items-center gap-3 rounded-2xl border border-slate-200 dark:border-slate-800 bg-slate-50/90 dark:bg-slate-900 px-4 py-3 hover:border-cyan-400 transition">
+                        <span class="rounded-lg bg-cyan-600 px-2.5 py-1 font-mono text-xs font-bold text-white">#CLD405</span>
+                        <div><p class="text-xs font-bold text-slate-900 dark:text-white">Điện toán Đám mây &amp; Docker</p><p class="text-[11px] text-slate-500">6 thành viên &bull; Đường ống CI/CD</p></div>
+                    </a>
+                    <a data-auth-cta href="./pages/auth/login.html" class="flex items-center gap-3 rounded-2xl border border-slate-200 dark:border-slate-800 bg-slate-50/90 dark:bg-slate-900 px-4 py-3 hover:border-indigo-400 transition">
+                        <span class="rounded-lg bg-indigo-700 px-2.5 py-1 font-mono text-xs font-bold text-white">#SWE206</span>
+                        <div><p class="text-xs font-bold text-slate-900 dark:text-white">Công nghệ Phần mềm &amp; SOLID</p><p class="text-[11px] text-slate-500">6 thành viên &bull; Thiết kế Hướng ĐT</p></div>
+                    </a>
+                    <a data-auth-cta href="./pages/auth/login.html" class="flex items-center gap-3 rounded-2xl border border-slate-200 dark:border-slate-800 bg-slate-50/90 dark:bg-slate-900 px-4 py-3 hover:border-orange-400 transition">
+                        <span class="rounded-lg bg-orange-600 px-2.5 py-1 font-mono text-xs font-bold text-white">#IOT310</span>
+                        <div><p class="text-xs font-bold text-slate-900 dark:text-white">Hệ thống Nhúng IoT &amp; ESP32</p><p class="text-[11px] text-slate-500">5 thành viên &bull; Giao thức MQTT</p></div>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- =========================================================================
+             BENTO GRID BẮT SÁNG CON TRỎ + SÂN CHƠI LẬT THẺ 3D TRỰC TIẾP TRÊN TRANG CHỦ
+             ========================================================================= -->
+        <section id="features-bento" class="py-24">
+            <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+                <div class="max-w-2xl mx-auto text-center mb-16 reveal-up">
+                    <span class="rounded-full bg-indigo-50 dark:bg-indigo-500/15 border border-indigo-200/70 dark:border-indigo-400/30 px-3.5 py-1 text-xs font-extrabold uppercase tracking-wider text-indigo-700 dark:text-indigo-300">
+                        Công nghệ Học tập Tương tác
+                    </span>
+                    <h2 class="mt-4 text-3xl sm:text-4xl font-black tracking-tight text-slate-900 dark:text-white">
+                        Thiết kế tỉ mỉ cho trải nghiệm ôn thi xuất sắc
+                    </h2>
+                    <p class="mt-3 text-sm sm:text-base text-slate-600 dark:text-slate-400">
+                        Di chuột qua từng thẻ hoặc bấm lật thử bộ thẻ ghi nhớ 3D ngay bên dưới.
+                    </p>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+                    <!-- Thẻ Bento 1 (7 cột) -->
+                    <div class="lg:col-span-7 saas-card spotlight-card p-7 sm:p-8 reveal-up" style="--reveal-delay: 0ms;">
+                        <div class="flex items-center justify-between mb-5">
+                            <span class="flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br from-indigo-600 to-violet-600 text-white text-lg font-black shadow-lg shadow-indigo-600/25">@</span>
+                            <span class="rounded-full bg-indigo-50 dark:bg-indigo-500/15 px-3 py-1 text-[11px] font-bold text-indigo-700 dark:text-indigo-300">Trợ lý Học thuật AI</span>
+                        </div>
+                        <h3 class="text-xl sm:text-2xl font-extrabold text-slate-900 dark:text-white">Hỏi đáp @bot Bám sát Giáo trình, Hiển thị Toán &amp; Code Đẳng cấp</h3>
+                        <p class="mt-3 text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
+                            Không còn cảnh chuyển qua lại hàng chục tab rời rạc. Ngay trong khung trò chuyện nhóm, trợ giảng <code class="font-mono font-bold text-indigo-600 dark:text-indigo-300">@bot</code> đọc hiểu toàn bộ tài liệu PDF của phòng, trình bày công thức toán học sắc nét, bảng đối chiếu trực quan và khối mã nguồn có nút sao chép nhanh.
+                        </p>
+                        <div class="mt-6 flex flex-wrap gap-2">
+                            <span class="rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-800/80 px-3 py-1.5 text-xs font-semibold text-slate-700 dark:text-slate-200">🎙️ Nhập liệu Giọng nói Tiếng Việt</span>
+                            <span class="rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-800/80 px-3 py-1.5 text-xs font-semibold text-slate-700 dark:text-slate-200">🔊 Nghe Đọc thành tiếng</span>
+                            <span class="rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-800/80 px-3 py-1.5 text-xs font-semibold text-slate-700 dark:text-slate-200">📌 Ghim lên Đầu Phòng</span>
+                        </div>
+                    </div>
+
+                    <!-- Thẻ Bento 2 (5 cột): SÂN CHƠI LẬT THẺ 3D SỐNG NGAY TRÊN LANDING PAGE -->
+                    <div id="interactive-3d-section" class="lg:col-span-5 saas-card spotlight-card p-7 flex flex-col justify-between reveal-up" style="--reveal-delay: 100ms;">
+                        <div class="flex items-center justify-between mb-3">
+                            <div>
+                                <span class="text-[11px] font-extrabold uppercase tracking-wider text-purple-600 dark:text-purple-400">Tương tác Trực tiếp</span>
+                                <h3 class="text-lg font-extrabold text-slate-900 dark:text-white">Bấm vào thẻ để Lật 3D!</h3>
+                            </div>
+                            <button id="landing-next-demo-card" type="button"
+                                class="rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 px-3 py-1.5 text-xs font-bold text-indigo-600 dark:text-indigo-300 hover:border-indigo-400 transition">
+                                Đổi câu khác &rarr;
+                            </button>
+                        </div>
+
+                        <div class="flashcard-scene my-2">
+                            <div id="landing-demo-card-inner" class="flashcard-3d-inner" style="min-height: 190px;">
+                                <!-- Mặt trước -->
+                                <div class="flashcard-face bg-gradient-to-br from-indigo-600 via-violet-600 to-purple-700 text-white">
+                                    <div class="flex items-center justify-between text-[11px] font-semibold text-indigo-100">
+                                        <span id="demo-fc-topic">Chuyên đề #DSA202</span>
+                                        <span>Nhấn để lật ↻</span>
+                                    </div>
+                                    <p id="demo-fc-front" class="text-sm sm:text-base font-extrabold leading-snug">
+                                        Độ phức tạp thời gian của thuật toán Dijkstra cài đặt bằng Binary Min-Heap là bao nhiêu?
+                                    </p>
+                                    <span class="text-[11px] text-indigo-200">Mặt trước &bull; Câu hỏi ôn tập</span>
+                                </div>
+                                <!-- Mặt sau -->
+                                <div class="flashcard-face flashcard-face-back border-2 border-emerald-400/60 bg-white dark:bg-slate-900 text-slate-900 dark:text-white">
+                                    <div class="flex items-center justify-between text-[11px] font-bold text-emerald-600 dark:text-emerald-400">
+                                        <span>Đáp án Chuẩn xác ✓</span>
+                                        <span>Nhấn để úp lại ↺</span>
+                                    </div>
+                                    <p id="demo-fc-back" class="text-xs sm:text-sm font-semibold text-slate-700 dark:text-slate-200 leading-relaxed">
+                                        O((|V| + |E|) log |V|) trên danh sách kề, với điều kiện bắt buộc mọi cạnh có trọng số không âm w(u, v) &ge; 0.
+                                    </p>
+                                    <span class="text-[11px] text-slate-400">Spaced Repetition &bull; Active Recall</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Thẻ Bento 3 (4 cột) -->
+                    <div class="lg:col-span-4 saas-card spotlight-card p-7 reveal-up" style="--reveal-delay: 60ms;">
+                        <div class="flex h-11 w-11 items-center justify-center rounded-2xl bg-rose-50 dark:bg-rose-500/20 text-rose-600 dark:text-rose-300 text-lg mb-4">⏱️</div>
+                        <h3 class="text-lg font-extrabold text-slate-900 dark:text-white">Pomodoro Nhóm Thời Gian Thực</h3>
+                        <p class="mt-2 text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
+                            Một người bấm bắt đầu phiên 25 phút Tập trung hoặc 5 phút Giải lao, toàn bộ thành viên trong phòng cùng đếm ngược đồng bộ kèm âm báo êm dịu.
+                        </p>
+                    </div>
+
+                    <!-- Thẻ Bento 4 (4 cột) -->
+                    <div class="lg:col-span-4 saas-card spotlight-card p-7 reveal-up" style="--reveal-delay: 140ms;">
+                        <div class="flex h-11 w-11 items-center justify-center rounded-2xl bg-amber-50 dark:bg-amber-500/20 text-amber-600 dark:text-amber-300 text-lg mb-4">🏆</div>
+                        <h3 class="text-lg font-extrabold text-slate-900 dark:text-white">Thi Đếm Ngược &amp; Đua Top</h3>
+                        <p class="mt-2 text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
+                            Biên soạn đề thi từ chính tệp PDF trong phòng, tự động chấm điểm thang 10, bắn pháo giấy chúc mừng điểm giỏi và xếp hạng Vương miện.
+                        </p>
+                    </div>
+
+                    <!-- Thẻ Bento 5 (4 cột) -->
+                    <div class="lg:col-span-4 saas-card spotlight-card p-7 reveal-up" style="--reveal-delay: 220ms;">
+                        <div class="flex h-11 w-11 items-center justify-center rounded-2xl bg-emerald-50 dark:bg-emerald-500/20 text-emerald-600 dark:text-emerald-300 text-lg mb-4">⌘</div>
+                        <h3 class="text-lg font-extrabold text-slate-900 dark:text-white">Spotlight Ctrl + K &amp; In Đề Cương</h3>
+                        <p class="mt-2 text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
+                            Nhấn <kbd class="rounded border border-slate-300 dark:border-slate-700 px-1.5 py-0.5 font-mono text-xs">Ctrl+K</kbd> để nhảy tức thì sang bất kỳ phòng học nào, đổi giao diện Sáng/Tối hoặc xuất phiếu ôn tập PDF sạch đẹp.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- =========================================================================
+             QUY TRÌNH 3 BƯỚC CÓ TRỤC NỐI ÁNH SÁNG (WORKFLOW TIMELINE)
+             ========================================================================= -->
+        <section id="workflow-timeline" class="py-20 bg-white dark:bg-slate-900/50 border-y border-slate-200/70 dark:border-slate-800">
+            <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+                <div class="text-center max-w-2xl mx-auto mb-14 reveal-up">
+                    <span class="text-xs font-extrabold uppercase tracking-widest text-indigo-600 dark:text-indigo-400">Đơn giản &amp; Tốc độ</span>
+                    <h2 class="mt-2 text-3xl sm:text-4xl font-black tracking-tight text-slate-900 dark:text-white">
+                        Bắt đầu buổi học nhóm hiệu quả trong 3 bước
+                    </h2>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 relative">
+                    <div class="saas-card spotlight-card p-7 relative reveal-up" style="--reveal-delay: 0ms;">
+                        <span class="inline-flex h-10 w-10 items-center justify-center rounded-2xl bg-indigo-600 font-mono text-sm font-black text-white shadow-lg shadow-indigo-600/30">01</span>
+                        <h3 class="mt-5 text-lg font-extrabold text-slate-900 dark:text-white">Vào Phòng hoặc Nhập Mã Mời</h3>
+                        <p class="mt-2 text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
+                            Chọn ngay trong 10+ phòng chuyên ngành đang mở hoặc nhập mã mời từ bạn học (như <code class="font-mono font-bold text-indigo-600 dark:text-indigo-300">OS209</code>, <code class="font-mono font-bold text-indigo-600 dark:text-indigo-300">SEC308</code>) để vào thẳng không gian học tập.
+                        </p>
+                    </div>
+
+                    <div class="saas-card spotlight-card p-7 relative reveal-up" style="--reveal-delay: 120ms;">
+                        <span class="inline-flex h-10 w-10 items-center justify-center rounded-2xl bg-violet-600 font-mono text-sm font-black text-white shadow-lg shadow-violet-600/30">02</span>
+                        <h3 class="mt-5 text-lg font-extrabold text-slate-900 dark:text-white">Tải Slide PDF &amp; Thảo luận @bot</h3>
+                        <p class="mt-2 text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
+                            Tải giáo trình PDF lên phòng để AI tự động tóm tắt trọng tâm, sau đó bật Pomodoro 25 phút và đặt câu hỏi khó cùng nhóm bạn.
+                        </p>
+                    </div>
+
+                    <div class="saas-card spotlight-card p-7 relative reveal-up" style="--reveal-delay: 240ms;">
+                        <span class="inline-flex h-10 w-10 items-center justify-center rounded-2xl bg-emerald-600 font-mono text-sm font-black text-white shadow-lg shadow-emerald-600/30">03</span>
+                        <h3 class="mt-5 text-lg font-extrabold text-slate-900 dark:text-white">Luyện Đề Trắc nghiệm &amp; Thẻ 3D</h3>
+                        <p class="mt-2 text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
+                            Tự động sinh đề thi thử và bộ thẻ ghi nhớ 3D từ tài liệu vừa tải, kiểm tra điểm số tức thì và vươn lên dẫn đầu Bảng xếp hạng.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- =========================================================================
+             AURORA BORDER-GLOW CTA BANNER CUỐI TRANG
+             ========================================================================= -->
+        <section class="py-20">
+            <div class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 reveal-up">
+                <div class="cta-aurora-glow rounded-3xl mesh-dark-surface bg-grid-dark p-8 sm:p-14 text-white relative overflow-hidden">
+                    <div class="pointer-events-none absolute -right-16 -top-16 h-64 w-64 rounded-full bg-indigo-500/30 blur-3xl"></div>
+                    <div class="pointer-events-none absolute -left-16 -bottom-16 h-64 w-64 rounded-full bg-emerald-400/20 blur-3xl"></div>
+
+                    <div class="relative z-10 flex flex-col lg:flex-row lg:items-center lg:justify-between gap-8">
+                        <div class="max-w-xl space-y-3">
+                            <span class="inline-block rounded-full bg-white/10 border border-white/15 px-3.5 py-1 text-xs font-bold text-indigo-200">
+                                Miễn phí dành cho Sinh viên &amp; Nhóm học tập
+                            </span>
+                            <h2 class="text-3xl sm:text-4xl font-black tracking-tight leading-tight">
+                                Biến mỗi buổi ôn thi nhóm thành trải nghiệm đầy cảm hứng.
+                            </h2>
+                            <p class="text-sm sm:text-base text-slate-300 leading-relaxed">
+                                Đăng nhập nhanh bằng tài khoản trải nghiệm hoặc tạo tài khoản mới chỉ trong 15 giây.
+                            </p>
+                        </div>
+
+                        <div class="flex flex-wrap items-center gap-3.5 shrink-0">
+                            <a data-auth-cta href="./pages/auth/login.html"
+                                class="btn-primary-glow inline-flex items-center gap-2 rounded-2xl px-8 py-4 text-sm font-extrabold shadow-xl">
+                                <span>Mở Không gian Học tập</span>
+                                <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.4"><path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6"/></svg>
+                            </a>
+                            <a href="./pages/auth/register.html"
+                                class="rounded-2xl border border-white/20 bg-white/10 px-6 py-4 text-sm font-bold text-white hover:bg-white/20 transition">
+                                Đăng ký Tài khoản
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="border-t border-slate-200/80 dark:border-slate-800 bg-white/90 dark:bg-slate-950 py-8">
+        <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500 dark:text-slate-400">
+            <p>&copy; 2026 Smart Study Workspace &mdash; Nền tảng Học tập Hợp tác Thông minh VKU</p>
+            <div class="flex items-center gap-6 font-semibold">
+                <a data-auth-cta href="./pages/auth/login.html" class="hover:text-indigo-600 dark:hover:text-indigo-400 transition">Đăng nhập</a>
+                <a href="./pages/auth/register.html" class="hover:text-indigo-600 dark:hover:text-indigo-400 transition">Đăng ký Sinh viên</a>
+                <a href="./pages/auth/forgot-password.html" class="hover:text-indigo-600 dark:hover:text-indigo-400 transition">Khôi phục mật khẩu</a>
+            </div>
+        </div>
+    </footer>
+
+    <script type="module" src="./src/features/auth/landing.controller.js"></script>
+</body>
+</html>

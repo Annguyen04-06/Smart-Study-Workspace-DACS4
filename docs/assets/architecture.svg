@@ -1,0 +1,143 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1200" height="560" viewBox="0 0 1200 560" role="img" aria-label="Kiến trúc hệ thống Smart Study Workspace">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0b1026"/><stop offset="1" stop-color="#111a3a"/>
+    </linearGradient>
+    <linearGradient id="nodeStroke" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#818cf8"/><stop offset="1" stop-color="#22d3ee"/>
+    </linearGradient>
+    <linearGradient id="aiStroke" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#f0abfc"/><stop offset="1" stop-color="#a78bfa"/>
+    </linearGradient>
+    <pattern id="dots" width="22" height="22" patternUnits="userSpaceOnUse">
+      <circle cx="2" cy="2" r="1" fill="#ffffff" fill-opacity="0.06"/>
+    </pattern>
+    <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="4" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <clipPath id="frame"><rect width="1200" height="560" rx="24"/></clipPath>
+
+    <!-- Đường kết nối (dùng chung cho nét chạy và chấm dữ liệu di chuyển) -->
+    <path id="pClientTunnel" d="M262 248 C 300 248, 300 128, 338 128"/>
+    <path id="pTunnelApi" d="M548 128 C 590 128, 590 236, 632 236"/>
+    <path id="pClientApi" d="M262 292 L 632 292"/>
+    <path id="pApiSql" d="M872 236 C 905 236, 905 120, 942 120"/>
+    <path id="pApiAi" d="M872 296 L 942 296"/>
+    <path id="pAiGemini" d="M1052 346 L 1052 432"/>
+
+    <style>
+      .font { font-family: 'Segoe UI', 'Inter', 'Helvetica Neue', Arial, sans-serif; }
+      .flow { fill: none; stroke-width: 2.5; stroke-dasharray: 8 10; animation: flow 1.2s linear infinite; }
+      .flow-slow { animation-duration: 2s; }
+      @keyframes flow { to { stroke-dashoffset: -36; } }
+      .node { animation: pop 0.8s ease-out both; }
+      @keyframes pop { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+      .pulse { transform-box: fill-box; transform-origin: center; animation: pulse 2.2s ease-in-out infinite; }
+      @keyframes pulse { 0%, 100% { transform: scale(1); opacity: 0.9; } 50% { transform: scale(1.35); opacity: 0.35; } }
+      .dash-box { fill: none; stroke: #94a3b8; stroke-opacity: 0.45; stroke-width: 1.5; stroke-dasharray: 6 6; animation: flow 3s linear infinite; }
+    </style>
+  </defs>
+
+  <g clip-path="url(#frame)">
+    <rect width="1200" height="560" fill="url(#bg)"/>
+    <rect width="1200" height="560" fill="url(#dots)"/>
+
+    <g class="font">
+      <text x="40" y="52" font-size="24" font-weight="800" fill="#ffffff">Kiến trúc hệ thống</text>
+      <text x="40" y="78" font-size="14" fill="#94a3b8">Monorepo 4 tầng • Clean Architecture • All-in-One Host cổng 5000 / 5500</text>
+
+      <!-- Vùng máy chủ chạy ngầm 24/7 -->
+      <rect class="dash-box" x="608" y="56" width="572" height="330" rx="20"/>
+      <text x="628" y="80" font-size="13" font-weight="700" fill="#94a3b8">LAPTOP CHẠY NGẦM 24/7 • daemon-watchdog tự hồi phục</text>
+
+      <!-- Nét dữ liệu chạy -->
+      <use xlink:href="#pClientTunnel" class="flow" stroke="#22d3ee"/>
+      <use xlink:href="#pTunnelApi" class="flow" stroke="#22d3ee"/>
+      <use xlink:href="#pClientApi" class="flow flow-slow" stroke="#818cf8"/>
+      <use xlink:href="#pApiSql" class="flow flow-slow" stroke="#38bdf8"/>
+      <use xlink:href="#pApiAi" class="flow" stroke="#f0abfc"/>
+      <use xlink:href="#pAiGemini" class="flow" stroke="#f0abfc"/>
+
+      <!-- Chấm dữ liệu di chuyển (SignalR hai chiều + luồng Streaming @bot) -->
+      <circle r="5" fill="#a5f3fc" filter="url(#glow)"><animateMotion dur="2.4s" repeatCount="indefinite"><mpath xlink:href="#pClientTunnel"/></animateMotion></circle>
+      <circle r="5" fill="#a5f3fc" filter="url(#glow)"><animateMotion dur="2.4s" begin="1.2s" repeatCount="indefinite"><mpath xlink:href="#pTunnelApi"/></animateMotion></circle>
+      <circle r="5" fill="#c7d2fe" filter="url(#glow)"><animateMotion dur="2.8s" repeatCount="indefinite"><mpath xlink:href="#pClientApi"/></animateMotion></circle>
+      <circle r="5" fill="#fde68a" filter="url(#glow)"><animateMotion dur="2.8s" begin="1.4s" repeatCount="indefinite" keyPoints="1;0" keyTimes="0;1" calcMode="linear"><mpath xlink:href="#pClientApi"/></animateMotion></circle>
+      <circle r="5" fill="#f5d0fe" filter="url(#glow)"><animateMotion dur="1.6s" repeatCount="indefinite" keyPoints="1;0" keyTimes="0;1" calcMode="linear"><mpath xlink:href="#pApiAi"/></animateMotion></circle>
+      <circle r="5" fill="#f5d0fe" filter="url(#glow)"><animateMotion dur="1.6s" begin="0.8s" repeatCount="indefinite" keyPoints="1;0" keyTimes="0;1" calcMode="linear"><mpath xlink:href="#pAiGemini"/></animateMotion></circle>
+      <circle r="4" fill="#bae6fd" filter="url(#glow)"><animateMotion dur="3s" repeatCount="indefinite"><mpath xlink:href="#pApiSql"/></animateMotion></circle>
+
+      <!-- Nhãn đường kết nối -->
+      <text x="300" y="186" font-size="12" font-weight="700" fill="#67e8f9">HTTPS / WSS</text>
+      <text x="380" y="282" font-size="12" font-weight="700" fill="#a5b4fc">LAN :5500 • SignalR</text>
+      <text x="884" y="166" font-size="12" font-weight="700" fill="#7dd3fc">EF Core</text>
+      <text x="874" y="320" font-size="12" font-weight="700" fill="#f5d0fe">SSE</text>
+      <text x="1064" y="394" font-size="12" font-weight="700" fill="#f5d0fe">google-genai</text>
+
+      <!-- Nút: Người dùng -->
+      <g class="node" style="animation-delay:0.1s">
+        <rect x="40" y="200" width="222" height="140" rx="18" fill="#111c3d" stroke="url(#nodeStroke)" stroke-width="2"/>
+        <text x="62" y="236" font-size="20" font-weight="800" fill="#ffffff">📱 Người dùng</text>
+        <text x="62" y="264" font-size="14" fill="#cbd5e1">Laptop &amp; Điện thoại (PWA)</text>
+        <text x="62" y="286" font-size="14" fill="#cbd5e1">Vanilla ES6 • Tailwind</text>
+        <text x="62" y="308" font-size="14" fill="#cbd5e1">Optimistic UI • Offline</text>
+      </g>
+
+      <!-- Nút: Cloudflare -->
+      <g class="node" style="animation-delay:0.25s">
+        <rect x="338" y="84" width="210" height="92" rx="18" fill="#111c3d" stroke="#22d3ee" stroke-width="2"/>
+        <text x="356" y="118" font-size="16" font-weight="800" fill="#ffffff">☁️ Cloudflare Tunnel</text>
+        <text x="358" y="144" font-size="14" fill="#cbd5e1">Link HTTPS + QR</text>
+        <text x="358" y="164" font-size="13" fill="#67e8f9">4G / Wi-Fi mọi nơi</text>
+      </g>
+
+      <!-- Nút: Backend -->
+      <g class="node" style="animation-delay:0.4s">
+        <rect x="632" y="196" width="240" height="140" rx="18" fill="#111c3d" stroke="url(#nodeStroke)" stroke-width="2.5"/>
+        <circle class="pulse" cx="850" cy="218" r="6" fill="#34d399"/>
+        <text x="652" y="232" font-size="19" font-weight="800" fill="#ffffff">⚙️ ASP.NET Core 8</text>
+        <text x="652" y="260" font-size="14" fill="#cbd5e1">REST API • SignalR Hub</text>
+        <text x="652" y="282" font-size="14" fill="#cbd5e1">JWT • Brotli • Static Host</text>
+        <text x="652" y="304" font-size="13" fill="#a5b4fc">Domain / Application /</text>
+        <text x="652" y="322" font-size="13" fill="#a5b4fc">Infrastructure / API</text>
+      </g>
+
+      <!-- Nút: SQL Server -->
+      <g class="node" style="animation-delay:0.55s">
+        <rect x="942" y="96" width="218" height="80" rx="18" fill="#111c3d" stroke="#38bdf8" stroke-width="2"/>
+        <text x="962" y="128" font-size="18" font-weight="800" fill="#ffffff">🗄️ SQL Server</text>
+        <text x="962" y="154" font-size="14" fill="#cbd5e1">12 bảng chuẩn 3NF</text>
+      </g>
+
+      <!-- Nút: AI Service -->
+      <g class="node" style="animation-delay:0.7s">
+        <rect x="942" y="246" width="218" height="100" rx="18" fill="#111c3d" stroke="url(#aiStroke)" stroke-width="2"/>
+        <text x="962" y="278" font-size="18" font-weight="800" fill="#ffffff">🧠 FastAPI AI</text>
+        <text x="962" y="304" font-size="14" fill="#cbd5e1">PDF • Quiz • Flashcards</text>
+        <text x="962" y="326" font-size="14" fill="#cbd5e1">Mindmap • Streaming SSE</text>
+      </g>
+
+      <!-- Nút: Gemini -->
+      <g class="node" style="animation-delay:0.85s">
+        <rect x="942" y="432" width="218" height="92" rx="18" fill="#1a1035" stroke="#f0abfc" stroke-width="2"/>
+        <circle class="pulse" cx="1138" cy="452" r="6" fill="#f0abfc"/>
+        <text x="962" y="466" font-size="18" font-weight="800" fill="#ffffff">✨ Google Gemini</text>
+        <text x="962" y="492" font-size="14" fill="#cbd5e1">Flash • Structured Output</text>
+        <text x="962" y="512" font-size="13" fill="#f5d0fe">Tự né model quá tải</text>
+      </g>
+
+      <!-- Dòng sự kiện SignalR của @bot -->
+      <g class="node" style="animation-delay:1s">
+        <rect x="40" y="420" width="860" height="104" rx="18" fill="#0f1733" stroke="#334155"/>
+        <text x="62" y="452" font-size="14" font-weight="800" fill="#e2e8f0">⚡ Luồng @bot thời gian thực qua SignalR</text>
+        <g font-size="13" font-weight="700">
+          <rect x="62" y="468" width="190" height="34" rx="10" fill="#1e1b4b" stroke="#6366f1"/><text x="157" y="490" text-anchor="middle" fill="#c7d2fe">BotStreamStart • 0ms</text>
+          <rect x="292" y="468" width="230" height="34" rx="10" fill="#1e1b4b" stroke="#8b5cf6"/><text x="407" y="490" text-anchor="middle" fill="#ddd6fe">BotStreamChunk • gom 50ms</text>
+          <rect x="562" y="468" width="316" height="34" rx="10" fill="#1e1b4b" stroke="#d946ef"/><text x="720" y="490" text-anchor="middle" fill="#f5d0fe">BotStreamComplete • Markdown + KaTeX</text>
+        </g>
+        <path d="M256 485 h30 M526 485 h30" stroke="#a78bfa" stroke-width="2.5" class="flow"/>
+      </g>
+    </g>
+  </g>
+  <rect x="0.5" y="0.5" width="1199" height="559" rx="24" fill="none" stroke="#818cf8" stroke-opacity="0.3"/>
+</svg>

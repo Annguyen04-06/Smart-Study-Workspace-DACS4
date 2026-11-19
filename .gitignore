@@ -1,0 +1,52 @@
+# Bảo mật biến môi trường & khóa API (TUYỆT ĐỐI KHÔNG COMMIT .env / appsettings.Local.json)
+.env
+.env.*
+!.env.example
+ai-service/.env
+ai-service/.env.*
+!ai-service/.env.example
+**/appsettings.Local.json
+
+# Python Virtualenv & Cache
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+
+# .NET Build Artifacts
+bin/
+obj/
+.vs/
+*.user
+*.suo
+TestResults/
+
+# Uploaded User Runtime Files (giữ lại .gitkeep)
+backend-core/src/SmartStudy.API/wwwroot/uploads/materials/*
+!backend-core/src/SmartStudy.API/wwwroot/uploads/materials/.gitkeep
+backend-core/src/SmartStudy.API/wwwroot/uploads/avatars/*
+!backend-core/src/SmartStudy.API/wwwroot/uploads/avatars/.gitkeep
+
+# Danh sách tài khoản test (chỉ dùng nội bộ, không đẩy lên Git)
+TAI-KHOAN-TEST.txt
+
+# Local VPS & Windows Background Service runtime
+scripts/local-vps/bin/
+scripts/local-vps/logs/
+scripts/local-vps/publish-backend/
+scripts/local-vps/qr-portal.html
+scripts/local-vps/current-url.txt
+scripts/local-vps/current-tunnel-url.txt
+scripts/local-vps/tunnel.disabled
+scripts/background-service/logs/
+scripts/background-service/published-backend/
+scripts/background-service/.cloudflare-token
+deploy/vps/.env.production
+
+# OS & Editor
+.DS_Store
+Thumbs.db
+
+# Production Release Package
+release-package/

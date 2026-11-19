@@ -1,0 +1,58 @@
+{
+  "id": "./",
+  "name": "Smart Study Workspace - AI & Real-Time Learning",
+  "short_name": "SmartStudy",
+  "description": "Nền tảng học tập thông minh tích hợp Trợ giảng AI Gemini và phòng học thời gian thực SignalR.",
+  "lang": "vi",
+  "dir": "ltr",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#0f172a",
+  "theme_color": "#4f46e5",
+  "categories": ["education", "productivity"],
+  "icons": [
+    {
+      "src": "src/assets/icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "src/assets/icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "src/assets/icons/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Không gian Phòng học",
+      "short_name": "Phòng học",
+      "description": "Mở danh sách phòng học và trao đổi học tập",
+      "url": "pages/student/dashboard.html",
+      "icons": [{ "src": "src/assets/icons/icon-192.png", "sizes": "192x192", "type": "image/png" }]
+    },
+    {
+      "name": "Hồ sơ & Lịch sử Thi",
+      "short_name": "Hồ sơ",
+      "description": "Xem thành tích học tập và lịch sử làm bài thi",
+      "url": "pages/student/profile.html",
+      "icons": [{ "src": "src/assets/icons/icon-192.png", "sizes": "192x192", "type": "image/png" }]
+    },
+    {
+      "name": "Quản trị Hệ thống",
+      "short_name": "Quản trị",
+      "description": "Khu vực điều hành dành cho Quản trị viên",
+      "url": "pages/admin/dashboard.html",
+      "icons": [{ "src": "src/assets/icons/icon-192.png", "sizes": "192x192", "type": "image/png" }]
+    }
+  ]
+}

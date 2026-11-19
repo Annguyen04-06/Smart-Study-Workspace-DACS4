@@ -1,0 +1,8 @@
+# Chặn tuyệt đối file .env chứa khóa API thật trong tầng AI Microservice
+.env
+.env.*
+!.env.example
+.venv/
+venv/
+__pycache__/
+*.py[cod]

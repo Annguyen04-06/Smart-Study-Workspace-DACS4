@@ -1,0 +1,688 @@
+/* ==========================================================================
+   animations.css — Hiệu ứng 3D Card Flip, Smooth Bot Reveal, SPA Fade & Voice Wave
+   ========================================================================== */
+
+/* Hiệu ứng Lật thẻ 3D chân thực có bóng đổ chiều sâu */
+.flashcard-scene {
+    perspective: 1300px;
+}
+
+.flashcard-3d-inner {
+    position: relative;
+    width: 100%;
+    min-height: 265px;
+    transform-style: preserve-3d;
+    transition: transform 0.56s cubic-bezier(0.22, 1, 0.36, 1);
+    cursor: pointer;
+}
+
+.flashcard-3d-inner.is-flipped {
+    transform: rotateY(180deg);
+}
+
+.flashcard-face {
+    position: absolute;
+    inset: 0;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    border-radius: 1.1rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 1.5rem;
+    box-shadow: 0 16px 34px -10px rgba(15, 23, 42, 0.14);
+}
+
+.flashcard-face-back {
+    transform: rotateY(180deg);
+}
+
+/* Ba chấm nhảy động khi thành viên gõ phím hoặc @bot đang suy nghĩ */
+@keyframes typingBounce {
+    0%, 80%, 100% {
+        transform: translateY(0);
+        opacity: 0.45;
+    }
+    40% {
+        transform: translateY(-4px);
+        opacity: 1;
+    }
+}
+
+.typing-dot {
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    border-radius: 9999px;
+    background-color: currentColor;
+    animation: typingBounce 1.25s infinite ease-in-out;
+}
+
+.typing-dot:nth-child(2) {
+    animation-delay: 0.16s;
+}
+
+.typing-dot:nth-child(3) {
+    animation-delay: 0.32s;
+}
+
+/* Skeleton Shimmer mượt mà cho cả Sáng & Tối */
+@keyframes skeletonShimmer {
+    0% {
+        background-position: -200% 0;
+    }
+    100% {
+        background-position: 200% 0;
+    }
+}
+
+.skeleton-box {
+    background: linear-gradient(90deg, #f1f5f9 25%, #e2e8f0 50%, #f1f5f9 75%);
+    background-size: 200% 100%;
+    animation: skeletonShimmer 1.45s infinite linear;
+    border-radius: 0.6rem;
+}
+
+html.dark .skeleton-box {
+    background: linear-gradient(90deg, #1e293b 25%, #334155 50%, #1e293b 75%);
+    background-size: 200% 100%;
+}
+
+/* Hiệu ứng SPA chuyển tab / danh sách 180ms */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(6px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.spa-fade-in {
+    animation: fadeInUp 0.18s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Hiệu ứng Smooth Reveal dành riêng cho tin nhắn @bot mới về qua SignalR */
+@keyframes botSmoothReveal {
+    from {
+        opacity: 0;
+        transform: translateY(12px) scale(0.985);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+.animate-bot-reveal {
+    animation: botSmoothReveal 0.32s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+@keyframes slideFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-8px) scale(0.98);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+.animate-slide-fade {
+    animation: slideFadeIn 0.2s ease-out forwards;
+}
+
+/* Sóng âm thu giọng nói tiếng Việt (Voice-to-Text) */
+@keyframes voicePulse {
+    0%, 100% {
+        box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.45);
+    }
+    50% {
+        box-shadow: 0 0 0 8px rgba(239, 68, 68, 0);
+    }
+}
+
+.voice-recording-active {
+    background-color: #ef4444 !important;
+    color: #ffffff !important;
+    animation: voicePulse 1.2s infinite;
+}
+
+/* Hiệu ứng Aurora Orbs & Lưới kiến trúc hiện đại cho Trang chủ và Đăng nhập */
+@keyframes floatSlow {
+    0%, 100% {
+        transform: translateY(0px) rotate(0deg);
+    }
+    50% {
+        transform: translateY(-10px) rotate(0.6deg);
+    }
+}
+
+@keyframes floatDelayed {
+    0%, 100% {
+        transform: translateY(0px);
+    }
+    50% {
+        transform: translateY(8px);
+    }
+}
+
+@keyframes auroraDrift {
+    0%, 100% {
+        transform: translate(0, 0) scale(1);
+    }
+    50% {
+        transform: translate(24px, -18px) scale(1.08);
+    }
+}
+
+.animate-float-slow {
+    animation: floatSlow 6s ease-in-out infinite;
+}
+
+.animate-float-delayed {
+    animation: floatDelayed 7s ease-in-out infinite;
+}
+
+.animate-aurora {
+    animation: auroraDrift 11s ease-in-out infinite;
+}
+
+.bg-grid-slate {
+    background-image:
+        linear-gradient(to right, rgba(99, 102, 241, 0.06) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(99, 102, 241, 0.06) 1px, transparent 1px);
+    background-size: 36px 36px;
+}
+
+.bg-grid-dark {
+    background-image:
+        linear-gradient(to right, rgba(255, 255, 255, 0.045) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255, 255, 255, 0.045) 1px, transparent 1px);
+    background-size: 34px 34px;
+}
+
+/* Chữ chuyển sắc Shimmer chảy mượt liên tục */
+@keyframes textGradientFlow {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+.text-shimmer-gradient {
+    background: linear-gradient(110deg, #4f46e5 0%, #9333ea 28%, #ec4899 52%, #06b6d4 76%, #4f46e5 100%);
+    background-size: 240% auto;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    animation: textGradientFlow 6.5s ease infinite;
+}
+
+html.dark .text-shimmer-gradient {
+    background: linear-gradient(110deg, #818cf8 0%, #c084fc 30%, #f472b6 55%, #38bdf8 80%, #818cf8 100%);
+    background-size: 240% auto;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
+/* Hiệu ứng Scroll Blur-Reveal xuất hiện tuần tự khi cuộn trang */
+.reveal-up {
+    opacity: 0;
+    transform: translateY(26px) scale(0.985);
+    filter: blur(5px);
+    transition:
+        opacity 0.72s cubic-bezier(0.16, 1, 0.3, 1),
+        transform 0.72s cubic-bezier(0.16, 1, 0.3, 1),
+        filter 0.72s cubic-bezier(0.16, 1, 0.3, 1);
+    transition-delay: var(--reveal-delay, 0ms);
+    will-change: opacity, transform, filter;
+}
+
+.reveal-up.is-visible {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    filter: blur(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .reveal-up {
+        opacity: 1;
+        transform: none;
+        filter: none;
+    }
+}
+
+/* Dải băng chuyền vô tận (Infinite Marquee) có làm mờ 2 biên */
+@keyframes marqueeScrollLeft {
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        transform: translateX(-50%);
+    }
+}
+
+@keyframes marqueeScrollRight {
+    0% {
+        transform: translateX(-50%);
+    }
+    100% {
+        transform: translateX(0);
+    }
+}
+
+.marquee-mask {
+    mask-image: linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%);
+    -webkit-mask-image: linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%);
+}
+
+.marquee-track-left {
+    display: flex;
+    width: max-content;
+    animation: marqueeScrollLeft 38s linear infinite;
+}
+
+.marquee-track-right {
+    display: flex;
+    width: max-content;
+    animation: marqueeScrollRight 42s linear infinite;
+}
+
+.marquee-mask:hover .marquee-track-left,
+.marquee-mask:hover .marquee-track-right {
+    animation-play-state: paused;
+}
+
+/* Thẻ Bento bắt sáng theo con trỏ chuột (Cursor Spotlight Glow) */
+.spotlight-card {
+    position: relative;
+    overflow: hidden;
+}
+
+.spotlight-card::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    background: radial-gradient(
+        420px circle at var(--spot-x, 50%) var(--spot-y, 50%),
+        rgba(99, 102, 241, 0.14),
+        transparent 60%
+    );
+}
+
+html.dark .spotlight-card::before {
+    background: radial-gradient(
+        420px circle at var(--spot-x, 50%) var(--spot-y, 50%),
+        rgba(129, 140, 248, 0.18),
+        transparent 60%
+    );
+}
+
+.spotlight-card:hover::before {
+    opacity: 1;
+}
+
+/* Khung cửa sổ Hero 3D Tilt mượt mà */
+.hero-tilt-stage {
+    perspective: 1500px;
+}
+
+.hero-tilt-window {
+    transform-style: preserve-3d;
+    transition: transform 0.22s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.3s ease;
+}
+
+/* Viền ánh sáng chạy vòng quanh (Animated Border Glow) */
+@keyframes pulseGlowRing {
+    0%, 100% {
+        box-shadow: 0 20px 55px -15px rgba(79, 70, 229, 0.35);
+    }
+    50% {
+        box-shadow: 0 25px 65px -12px rgba(139, 92, 246, 0.52);
+    }
+}
+
+.cta-aurora-glow {
+    animation: pulseGlowRing 5s ease-in-out infinite;
+}
+
+/* ==========================================================================
+   ULTRA-MODERN SAAS MICRO-INTERACTIONS (SPOTLIGHT, 3D TILT, AI AURA, ZEN, EQ)
+   ========================================================================== */
+
+/* 1. Mouse-Tracking Spotlight Surface (--mouse-x, --mouse-y) */
+.spotlight-surface {
+    position: relative;
+    overflow: hidden;
+    isolation: isolate;
+}
+
+.spotlight-surface::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    pointer-events: none;
+    opacity: 0;
+    z-index: 0;
+    transition: opacity 0.28s ease;
+    background: radial-gradient(
+        380px circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
+        rgba(99, 102, 241, 0.12),
+        rgba(168, 85, 247, 0.05) 38%,
+        transparent 68%
+    );
+}
+
+.spotlight-surface::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 1px;
+    pointer-events: none;
+    opacity: 0;
+    z-index: 1;
+    transition: opacity 0.28s ease;
+    background: radial-gradient(
+        260px circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
+        rgba(99, 102, 241, 0.55),
+        rgba(14, 165, 233, 0.22) 45%,
+        transparent 72%
+    );
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+}
+
+html.dark .spotlight-surface::before {
+    background: radial-gradient(
+        400px circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
+        rgba(129, 140, 248, 0.16),
+        rgba(192, 132, 252, 0.07) 40%,
+        transparent 70%
+    );
+}
+
+html.dark .spotlight-surface::after {
+    background: radial-gradient(
+        280px circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
+        rgba(165, 180, 252, 0.68),
+        rgba(56, 189, 248, 0.28) 45%,
+        transparent 74%
+    );
+}
+
+.spotlight-surface:hover::before,
+.spotlight-surface:hover::after {
+    opacity: 1;
+}
+
+.spotlight-surface > * {
+    position: relative;
+    z-index: 2;
+}
+
+/* 2. 3D Tilt Interactive Cards (Flashcards & Top 1-2-3 Leaderboard) */
+.tilt-3d-card {
+    transform: perspective(1050px) rotateX(var(--tilt-rx, 0deg)) rotateY(var(--tilt-ry, 0deg)) translateZ(0);
+    transform-style: preserve-3d;
+    transition: transform 0.16s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.22s ease;
+    will-change: transform;
+}
+
+.tilt-3d-card.is-resetting {
+    transition: transform 0.42s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.3s ease;
+}
+
+/* 3. Aurora Mesh Orbs tinh tế cho cả Light & Dark Mode */
+@keyframes auroraSlowFloatA {
+    0%, 100% {
+        transform: translate3d(0, 0, 0) scale(1);
+    }
+    50% {
+        transform: translate3d(32px, -22px, 0) scale(1.09);
+    }
+}
+
+@keyframes auroraSlowFloatB {
+    0%, 100% {
+        transform: translate3d(0, 0, 0) scale(1);
+    }
+    50% {
+        transform: translate3d(-28px, 20px, 0) scale(1.07);
+    }
+}
+
+.aurora-orb-a {
+    animation: auroraSlowFloatA 14s ease-in-out infinite;
+    will-change: transform;
+}
+
+.aurora-orb-b {
+    animation: auroraSlowFloatB 17s ease-in-out infinite;
+    will-change: transform;
+}
+
+/* 4. Staggered List Entrance (35ms mỗi phần tử) & Ripple Buttons */
+@keyframes staggerSlideUp {
+    from {
+        opacity: 0;
+        transform: translate3d(0, 12px, 0) scale(0.99);
+    }
+    to {
+        opacity: 1;
+        transform: translate3d(0, 0, 0) scale(1);
+    }
+}
+
+.stagger-entrance {
+    animation: staggerSlideUp 0.36s cubic-bezier(0.16, 1, 0.3, 1) both;
+    animation-delay: calc(var(--stagger-index, 0) * 35ms);
+}
+
+.ripple-host {
+    position: relative;
+    overflow: hidden;
+}
+
+@keyframes uiRippleExpand {
+    0% {
+        transform: translate(-50%, -50%) scale(0);
+        opacity: 0.45;
+    }
+    100% {
+        transform: translate(-50%, -50%) scale(3.4);
+        opacity: 0;
+    }
+}
+
+.ui-ripple-wave {
+    position: absolute;
+    border-radius: 9999px;
+    pointer-events: none;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.58) 0%, rgba(199, 210, 254, 0.2) 70%, transparent 100%);
+    animation: uiRippleExpand 0.56s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* 5. Apple Intelligence AI Aura Glow & Smooth Streaming Cursor */
+@keyframes aiAuraFlow {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+.ai-aura-card {
+    position: relative;
+    border-radius: 1.15rem;
+    padding: 2px;
+    background: linear-gradient(
+        120deg,
+        #6366f1 0%,
+        #a855f7 22%,
+        #ec4899 45%,
+        #06b6d4 68%,
+        #10b981 85%,
+        #6366f1 100%
+    );
+    background-size: 260% 260%;
+    animation: aiAuraFlow 3.4s ease infinite;
+    box-shadow:
+        0 10px 30px -8px rgba(99, 102, 241, 0.36),
+        0 0 24px -4px rgba(236, 72, 153, 0.24);
+}
+
+.ai-aura-inner {
+    border-radius: calc(1.15rem - 2px);
+    background: rgba(255, 255, 255, 0.96);
+    backdrop-filter: blur(12px);
+}
+
+html.dark .ai-aura-inner {
+    background: rgba(15, 23, 42, 0.95);
+}
+
+@keyframes cursorBlinkGlow {
+    0%, 100% {
+        opacity: 1;
+        box-shadow: 0 0 10px rgba(99, 102, 241, 0.85);
+    }
+    50% {
+        opacity: 0.25;
+        box-shadow: 0 0 2px rgba(99, 102, 241, 0.2);
+    }
+}
+
+.bot-streaming-cursor {
+    display: inline-block;
+    width: 7px;
+    height: 1.05em;
+    margin-left: 3px;
+    vertical-align: text-bottom;
+    border-radius: 3px;
+    background: linear-gradient(180deg, #6366f1, #ec4899);
+    animation: cursorBlinkGlow 0.72s ease-in-out infinite;
+}
+
+/* 6. Live Floating Emoji Burst (Lượn sóng cubic-bezier + Fade out) */
+@keyframes emojiWaveFloat {
+    0% {
+        opacity: 0;
+        transform: translate3d(0, 14px, 0) scale(0.55) rotate(-8deg);
+    }
+    18% {
+        opacity: 1;
+        transform: translate3d(var(--sway-a, -14px), -36px, 0) scale(1.18) rotate(8deg);
+    }
+    55% {
+        opacity: 0.95;
+        transform: translate3d(var(--sway-b, 18px), -135px, 0) scale(1.06) rotate(-6deg);
+    }
+    100% {
+        opacity: 0;
+        transform: translate3d(var(--sway-c, -10px), -255px, 0) scale(0.75) rotate(10deg);
+    }
+}
+
+.floating-emoji-burst {
+    position: fixed;
+    z-index: 95;
+    pointer-events: none;
+    user-select: none;
+    font-size: 1.65rem;
+    filter: drop-shadow(0 8px 14px rgba(15, 23, 42, 0.22));
+    animation: emojiWaveFloat var(--burst-dur, 2.2s) cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    will-change: transform, opacity;
+}
+
+/* 7. Animated Equalizer Bars (6 cột sóng nhạc tập trung) */
+@keyframes eqBounceBar {
+    0%, 100% {
+        transform: scaleY(0.24);
+    }
+    50% {
+        transform: scaleY(1);
+    }
+}
+
+.eq-bars-group {
+    display: inline-flex;
+    align-items: flex-end;
+    gap: 2px;
+    height: 14px;
+}
+
+.eq-bars-group .eq-bar {
+    width: 2.5px;
+    height: 100%;
+    border-radius: 9999px;
+    background: linear-gradient(180deg, #6366f1, #10b981);
+    transform: scaleY(0.28);
+    transform-origin: bottom;
+    transition: transform 0.2s ease;
+}
+
+.eq-bars-group.is-playing .eq-bar {
+    animation: eqBounceBar 0.82s ease-in-out infinite;
+}
+
+.eq-bars-group.is-playing .eq-bar:nth-child(2) { animation-duration: 0.64s; animation-delay: 0.11s; }
+.eq-bars-group.is-playing .eq-bar:nth-child(3) { animation-duration: 0.95s; animation-delay: 0.22s; }
+.eq-bars-group.is-playing .eq-bar:nth-child(4) { animation-duration: 0.72s; animation-delay: 0.07s; }
+.eq-bars-group.is-playing .eq-bar:nth-child(5) { animation-duration: 1.05s; animation-delay: 0.18s; }
+.eq-bars-group.is-playing .eq-bar:nth-child(6) { animation-duration: 0.78s; animation-delay: 0.29s; }
+
+/* 8. Chế độ Tập trung Sâu Zen Focus Mode trên Workspace */
+body.zen-focus-active #ws-left-pane {
+    display: none !important;
+}
+
+body.zen-focus-active #chat-prompt-chips {
+    display: none !important;
+}
+
+body.zen-focus-active .chat-canvas-bg {
+    box-shadow: inset 0 0 80px rgba(79, 70, 229, 0.06);
+}
+
+/* Tôn trọng tuyệt đối cài đặt giảm chuyển động (Accessibility & 60FPS Safe) */
+@media (prefers-reduced-motion: reduce) {
+    .stagger-entrance,
+    .aurora-orb-a,
+    .aurora-orb-b,
+    .ai-aura-card,
+    .bot-streaming-cursor,
+    .floating-emoji-burst,
+    .eq-bars-group.is-playing .eq-bar,
+    .animate-aurora,
+    .animate-float-slow,
+    .animate-float-delayed,
+    .marquee-track-left,
+    .marquee-track-right {
+        animation: none !important;
+        transition: none !important;
+    }
+
+    .tilt-3d-card {
+        transform: none !important;
+    }
+}

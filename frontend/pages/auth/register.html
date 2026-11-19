@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <title>Đăng ký Sinh viên — Smart Study Workspace</title>
+    <!-- PWA & Mobile Optimization -->
+    <link rel="manifest" href="../../manifest.webmanifest" />
+    <meta name="theme-color" content="#4f46e5" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="SmartStudy" />
+    <link rel="apple-touch-icon" href="../../src/assets/icons/apple-touch-icon.png" />
+    <link rel="icon" type="image/svg+xml" href="../../src/assets/icons/icon.svg" />
+    <link rel="alternate icon" type="image/png" href="../../src/assets/icons/favicon.png" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>tailwind.config = { darkMode: 'class' };</script>
+    <link rel="stylesheet" href="../../src/assets/styles/variables.css" />
+    <link rel="stylesheet" href="../../src/assets/styles/components.css" />
+    <link rel="stylesheet" href="../../src/assets/styles/animations.css" />
+    <link rel="stylesheet" href="../../src/assets/styles/mobile-native.css" />
+</head>
+<body class="safe-area-shell min-h-screen bg-slate-50 dark:bg-slate-950 bg-grid-slate dark:bg-grid-dark text-slate-900 dark:text-slate-100 flex flex-col justify-between py-6 px-4 sm:px-6 lg:px-8 relative overflow-x-hidden">
+
+    <div class="pointer-events-none fixed -top-24 left-1/2 -translate-x-1/2 h-96 w-[650px] rounded-full bg-gradient-to-r from-indigo-500/20 via-violet-500/15 to-emerald-400/15 blur-3xl"></div>
+
+    <div class="relative z-10 mx-auto w-full max-w-lg flex items-center justify-between">
+        <a id="register-home-link" href="../../index.html"
+            class="inline-flex items-center gap-1.5 rounded-xl border border-slate-200/80 dark:border-slate-800 bg-white/85 dark:bg-slate-900/85 px-3.5 py-2 text-xs font-semibold text-slate-600 dark:text-slate-300 hover:border-indigo-300 hover:text-indigo-600 transition">
+            <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.2"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/></svg>
+            <span>Trang chủ</span>
+        </a>
+
+        <button id="register-theme-toggle" type="button"
+            class="flex h-9 w-9 items-center justify-center rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-slate-600 dark:text-amber-300 hover:border-indigo-300 transition"
+            title="Đổi giao diện Sáng / Tối">
+            ◐
+        </button>
+    </div>
+
+    <main class="relative z-10 sm:mx-auto sm:w-full sm:max-w-lg my-auto py-6">
+        <div class="text-center mb-6">
+            <span class="inline-flex h-12 w-12 items-center justify-center rounded-2xl btn-primary-glow shadow-lg shadow-indigo-500/25 mb-3">
+                <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/>
+                </svg>
+            </span>
+            <h1 class="text-2xl sm:text-3xl font-black tracking-tight text-slate-900 dark:text-white">Tạo tài khoản Sinh viên</h1>
+            <p class="mt-1.5 text-sm text-slate-500 dark:text-slate-400">
+                Đã có tài khoản học tập?
+                <a id="register-login-link" href="./login.html" class="font-bold text-indigo-600 dark:text-indigo-400 hover:underline">Đăng nhập ngay</a>
+            </p>
+        </div>
+
+        <div class="saas-card p-6 sm:p-8 shadow-xl shadow-slate-900/[0.04]">
+            <form id="register-form" class="space-y-4" novalidate>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+                    <div>
+                        <label for="reg-student-code" class="block text-xs font-bold uppercase tracking-wide text-slate-700 dark:text-slate-300 mb-1.5">Mã số Sinh viên</label>
+                        <input id="reg-student-code" type="text" required placeholder="23IT025"
+                            class="w-full rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 px-3.5 py-2.5 text-sm font-mono uppercase text-slate-900 dark:text-white placeholder-slate-400 focus:border-indigo-500 focus:outline-none focus:ring-4 focus:ring-indigo-500/12 transition" />
+                    </div>
+                    <div>
+                        <label for="reg-full-name" class="block text-xs font-bold uppercase tracking-wide text-slate-700 dark:text-slate-300 mb-1.5">Họ và tên</label>
+                        <input id="reg-full-name" type="text" required placeholder="Phạm Minh Tuấn"
+                            class="w-full rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 px-3.5 py-2.5 text-sm text-slate-900 dark:text-white placeholder-slate-400 focus:border-indigo-500 focus:outline-none focus:ring-4 focus:ring-indigo-500/12 transition" />
+                    </div>
+                </div>
+
+                <div>
+                    <label for="reg-email" class="block text-xs font-bold uppercase tracking-wide text-slate-700 dark:text-slate-300 mb-1.5">Email học tập</label>
+                    <input id="reg-email" type="email" required placeholder="email.sinhvien@vku.udn.vn"
+                        class="w-full rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 px-3.5 py-2.5 text-sm text-slate-900 dark:text-white placeholder-slate-400 focus:border-indigo-500 focus:outline-none focus:ring-4 focus:ring-indigo-500/12 transition" />
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+                    <div>
+                        <label for="reg-password" class="block text-xs font-bold uppercase tracking-wide text-slate-700 dark:text-slate-300 mb-1.5">Mật khẩu</label>
+                        <input id="reg-password" type="password" required placeholder="Tối thiểu 6 ký tự"
+                            class="w-full rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 px-3.5 py-2.5 text-sm text-slate-900 dark:text-white placeholder-slate-400 focus:border-indigo-500 focus:outline-none focus:ring-4 focus:ring-indigo-500/12 transition" />
+                    </div>
+                    <div>
+                        <label for="reg-confirm-password" class="block text-xs font-bold uppercase tracking-wide text-slate-700 dark:text-slate-300 mb-1.5">Xác nhận mật khẩu</label>
+                        <input id="reg-confirm-password" type="password" required placeholder="Nhập lại mật khẩu"
+                            class="w-full rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 px-3.5 py-2.5 text-sm text-slate-900 dark:text-white placeholder-slate-400 focus:border-indigo-500 focus:outline-none focus:ring-4 focus:ring-indigo-500/12 transition" />
+                    </div>
+                </div>
+
+                <button id="register-submit-btn" type="submit"
+                    class="btn-primary-glow w-full rounded-xl px-4 py-3 text-sm font-extrabold shadow-lg shadow-indigo-600/20 disabled:opacity-60">
+                    Tạo tài khoản &amp; Vào Không gian Học tập &rarr;
+                </button>
+            </form>
+        </div>
+    </main>
+
+    <p class="relative z-10 text-center text-xs text-slate-400">
+        &copy; 2026 Smart Study Workspace &mdash; Học tập Hợp tác Thông minh
+    </p>
+
+    <script type="module" src="../../src/features/auth/register.controller.js"></script>
+</body>
+</html>

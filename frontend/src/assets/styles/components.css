@@ -1,0 +1,486 @@
+/* ==========================================================================
+   components.css — Giao diện SaaS SPA Hiện đại (Light/Dark Mode + Hệ thống .ai-prose)
+   ========================================================================== */
+
+/* Thanh cuộn mảnh tinh tế */
+.thin-scrollbar::-webkit-scrollbar,
+::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+
+.thin-scrollbar::-webkit-scrollbar-track,
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.thin-scrollbar::-webkit-scrollbar-thumb,
+::-webkit-scrollbar-thumb {
+    background-color: rgba(148, 163, 184, 0.42);
+    border-radius: 9999px;
+}
+
+.thin-scrollbar::-webkit-scrollbar-thumb:hover,
+::-webkit-scrollbar-thumb:hover {
+    background-color: rgba(100, 116, 139, 0.72);
+}
+
+.dark-scrollbar::-webkit-scrollbar-thumb {
+    background-color: rgba(148, 163, 184, 0.22);
+}
+
+.dark-scrollbar::-webkit-scrollbar-thumb:hover {
+    background-color: rgba(148, 163, 184, 0.42);
+}
+
+/* Nền lưới chấm bi học thuật tinh tế cho khung Chat & Landing */
+.chat-canvas-bg {
+    background-color: #f8fafc;
+    background-image: radial-gradient(rgba(148, 163, 184, 0.34) 1px, transparent 1px);
+    background-size: 22px 22px;
+}
+
+html.dark .chat-canvas-bg {
+    background-color: #090d1a;
+    background-image: radial-gradient(rgba(99, 102, 241, 0.18) 1px, transparent 1px);
+    background-size: 22px 22px;
+}
+
+/* Nền Mesh Gradient sang trọng */
+.mesh-dark-surface {
+    background-color: #090d1a;
+    background-image:
+        radial-gradient(at 15% 15%, rgba(79, 70, 229, 0.36) 0px, transparent 52%),
+        radial-gradient(at 85% 20%, rgba(139, 92, 246, 0.28) 0px, transparent 48%),
+        radial-gradient(at 50% 90%, rgba(16, 185, 129, 0.16) 0px, transparent 50%);
+}
+
+.mesh-light-hero {
+    background-color: #f8fafc;
+    background-image:
+        radial-gradient(at 20% 10%, rgba(99, 102, 241, 0.13) 0px, transparent 48%),
+        radial-gradient(at 80% 15%, rgba(168, 85, 247, 0.11) 0px, transparent 45%),
+        radial-gradient(at 50% 85%, rgba(14, 165, 233, 0.08) 0px, transparent 50%);
+}
+
+html.dark .mesh-light-hero,
+html.dark body {
+    background-color: #060913;
+    color: #f1f5f9;
+    background-image:
+        radial-gradient(at 18% 8%, rgba(79, 70, 229, 0.16) 0px, transparent 45%),
+        radial-gradient(at 82% 14%, rgba(139, 92, 246, 0.12) 0px, transparent 45%);
+}
+
+/* Nút bấm chính có hiệu ứng ánh sáng viền trên chuẩn Linear */
+.btn-primary-glow {
+    background: linear-gradient(135deg, #4f46e5 0%, #6366f1 55%, #7c3aed 100%);
+    color: #ffffff;
+    box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.22), 0 6px 18px -4px rgba(79, 70, 229, 0.42);
+    transition: transform 0.15s ease, box-shadow 0.18s ease, filter 0.18s ease;
+}
+
+.btn-primary-glow:hover:not(:disabled) {
+    filter: brightness(1.07);
+    transform: translateY(-1px);
+    box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.28), 0 10px 24px -4px rgba(79, 70, 229, 0.52);
+}
+
+.btn-primary-glow:active:not(:disabled) {
+    transform: translateY(0);
+}
+
+/* Khung thẻ chuẩn SaaS hỗ trợ hoàn chỉnh cả Light Mode & Dark Mode */
+.saas-card {
+    background: rgba(255, 255, 255, 0.96);
+    border: 1px solid rgba(226, 232, 240, 0.92);
+    border-radius: 1.05rem;
+    box-shadow: var(--shadow-sm);
+    transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease, background-color 0.2s ease;
+}
+
+html.dark .saas-card {
+    background: rgba(15, 23, 42, 0.92);
+    border-color: rgba(255, 255, 255, 0.09);
+    box-shadow: 0 8px 28px -8px rgba(0, 0, 0, 0.48);
+    color: #f1f5f9;
+}
+
+.saas-card-interactive:hover {
+    border-color: #a5b4fc;
+    box-shadow: var(--shadow-md);
+    transform: translateY(-3px);
+}
+
+html.dark .saas-card-interactive:hover {
+    border-color: rgba(129, 140, 248, 0.55);
+    box-shadow: 0 14px 32px -8px rgba(79, 70, 229, 0.25);
+}
+
+/* Đồng bộ Input / Select / Textarea và Typography trong Dark Mode */
+html.dark .saas-card h1,
+html.dark .saas-card h2,
+html.dark .saas-card h3,
+html.dark .saas-card h4,
+html.dark header h2 {
+    color: #f8fafc;
+}
+
+html.dark input:not([type="file"]),
+html.dark select,
+html.dark textarea {
+    background-color: rgba(15, 23, 42, 0.85);
+    border-color: rgba(148, 163, 184, 0.22);
+    color: #f8fafc;
+}
+
+html.dark table thead {
+    background-color: rgba(30, 41, 59, 0.85) !important;
+    color: #cbd5e1 !important;
+}
+
+html.dark table tbody {
+    background-color: rgba(15, 23, 42, 0.75) !important;
+}
+
+html.dark table tbody tr:hover {
+    background-color: rgba(30, 41, 59, 0.65) !important;
+}
+
+/* ==========================================================================
+   HỆ THỐNG TYPOGRAPHY .ai-prose CHUYÊN DỤNG CHO @BOT, PDF SUMMARY & QUIZ EXPLANATION
+   ========================================================================== */
+
+.ai-prose,
+.ai-markdown {
+    font-size: 0.925rem;
+    line-height: 1.72;
+    color: #1e293b;
+    word-break: break-word;
+}
+
+html.dark .ai-prose,
+html.dark .ai-markdown {
+    color: #e2e8f0;
+}
+
+/* 1. Phân cấp Tiêu đề h1..h4 rõ ràng + viền mảnh dưới h2 */
+.ai-prose h1 {
+    font-size: 1.25rem;
+    font-weight: 800;
+    color: #0f172a;
+    margin: 1rem 0 0.55rem;
+    line-height: 1.32;
+}
+
+.ai-prose h2 {
+    font-size: 1.08rem;
+    font-weight: 800;
+    color: #0f172a;
+    margin: 1.05rem 0 0.55rem;
+    padding-bottom: 0.35rem;
+    border-bottom: 1px solid rgba(99, 102, 241, 0.18);
+    line-height: 1.35;
+}
+
+.ai-prose h3 {
+    font-size: 0.98rem;
+    font-weight: 700;
+    color: #1e1b4b;
+    margin: 0.9rem 0 0.4rem;
+    line-height: 1.38;
+}
+
+.ai-prose h4 {
+    font-size: 0.92rem;
+    font-weight: 700;
+    color: #312e81;
+    margin: 0.75rem 0 0.35rem;
+}
+
+.ai-prose > :first-child {
+    margin-top: 0 !important;
+}
+
+html.dark .ai-prose h1,
+html.dark .ai-prose h2,
+html.dark .ai-prose h3,
+html.dark .ai-prose h4 {
+    color: #f8fafc;
+}
+
+html.dark .ai-prose h2 {
+    border-bottom-color: rgba(129, 140, 248, 0.25);
+}
+
+.ai-prose p {
+    margin-bottom: 0.7rem;
+}
+
+.ai-prose p:last-child {
+    margin-bottom: 0;
+}
+
+.ai-prose strong {
+    font-weight: 700;
+    color: #0f172a;
+}
+
+html.dark .ai-prose strong {
+    color: #ffffff;
+}
+
+/* 2. Danh sách ul, ol, li có chấm tròn màu Indigo & số thứ tự đậm, hỗ trợ lồng 2 cấp */
+.ai-prose ul,
+.ai-prose ol {
+    padding-left: 1.45rem;
+    margin: 0.55rem 0 0.8rem;
+}
+
+.ai-prose ul {
+    list-style-type: disc;
+}
+
+.ai-prose ul ul {
+    list-style-type: circle;
+    margin-top: 0.28rem;
+    margin-bottom: 0.28rem;
+}
+
+.ai-prose ol {
+    list-style-type: decimal;
+}
+
+.ai-prose ol ol {
+    list-style-type: lower-alpha;
+    margin-top: 0.28rem;
+    margin-bottom: 0.28rem;
+}
+
+.ai-prose li {
+    margin-bottom: 0.32rem;
+    padding-left: 0.2rem;
+}
+
+.ai-prose ul > li::marker {
+    color: #4f46e5;
+}
+
+.ai-prose ol > li::marker {
+    color: #4338ca;
+    font-weight: 700;
+}
+
+html.dark .ai-prose ul > li::marker,
+html.dark .ai-prose ol > li::marker {
+    color: #818cf8;
+}
+
+/* 3. Bảng biểu .ai-table-wrapper có thanh cuộn ngang, bo góc, kẻ ô & Zebra Striping */
+.ai-table-wrapper {
+    width: 100%;
+    overflow-x: auto;
+    margin: 0.85rem 0;
+    border-radius: 0.75rem;
+    border: 1px solid #cbd5e1;
+    box-shadow: 0 1px 3px rgba(15, 23, 42, 0.04);
+}
+
+html.dark .ai-table-wrapper {
+    border-color: rgba(148, 163, 184, 0.24);
+}
+
+.ai-table-wrapper table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.845rem;
+    min-width: 420px;
+}
+
+.ai-table-wrapper th,
+.ai-table-wrapper td {
+    padding: 0.55rem 0.8rem;
+    border-bottom: 1px solid #e2e8f0;
+    border-right: 1px solid #e2e8f0;
+    text-align: left;
+    vertical-align: top;
+}
+
+.ai-table-wrapper th:last-child,
+.ai-table-wrapper td:last-child {
+    border-right: none;
+}
+
+.ai-table-wrapper tr:last-child td {
+    border-bottom: none;
+}
+
+.ai-table-wrapper thead th {
+    background: linear-gradient(180deg, #eef2ff 0%, #e0e7ff 100%);
+    color: #1e1b4b;
+    font-weight: 700;
+    font-size: 0.8rem;
+    letter-spacing: 0.01em;
+}
+
+.ai-table-wrapper tbody tr:nth-child(even) {
+    background-color: #f8fafc;
+}
+
+.ai-table-wrapper tbody tr:hover {
+    background-color: #eef2ff;
+}
+
+html.dark .ai-table-wrapper thead th {
+    background: linear-gradient(180deg, #1e293b 0%, #0f172a 100%);
+    color: #c7d2fe;
+}
+
+html.dark .ai-table-wrapper th,
+html.dark .ai-table-wrapper td {
+    border-color: rgba(148, 163, 184, 0.18);
+}
+
+html.dark .ai-table-wrapper tbody tr:nth-child(even) {
+    background-color: rgba(30, 41, 59, 0.45);
+}
+
+html.dark .ai-table-wrapper tbody tr:hover {
+    background-color: rgba(79, 70, 229, 0.18);
+}
+
+/* 4. Inline Code (:not(pre) > code) dạng Badge JetBrains Mono sắc nét */
+.ai-prose :not(pre) > code {
+    font-family: var(--font-mono);
+    background-color: #eef2ff;
+    color: #be185d;
+    border: 1px solid rgba(99, 102, 241, 0.2);
+    padding: 0.12rem 0.42rem;
+    border-radius: 0.38rem;
+    font-size: 0.81rem;
+    font-weight: 600;
+}
+
+html.dark .ai-prose :not(pre) > code {
+    background-color: rgba(99, 102, 241, 0.18);
+    color: #f472b6;
+    border-color: rgba(129, 140, 248, 0.28);
+}
+
+/* 5. Khối IDE Fenced Code sang trọng (macOS Dots + Language Label + Copy Button) */
+.ai-code-wrapper {
+    position: relative;
+    margin: 0.85rem 0;
+    border-radius: 0.8rem;
+    overflow: hidden;
+    background-color: #0b1120;
+    border: 1px solid #1e293b;
+    box-shadow: 0 10px 24px -8px rgba(15, 23, 42, 0.35);
+}
+
+.ai-code-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.48rem 0.85rem;
+    background-color: #131c31;
+    border-bottom: 1px solid rgba(148, 163, 184, 0.16);
+    color: #cbd5e1;
+    font-size: 0.74rem;
+    font-family: var(--font-mono);
+}
+
+.ai-code-wrapper pre {
+    margin: 0;
+    padding: 0.95rem 1rem;
+    overflow-x: auto;
+    font-size: 0.82rem;
+    line-height: 1.6;
+    color: #f8fafc;
+}
+
+.ai-code-wrapper pre code.hljs {
+    background: transparent !important;
+    padding: 0 !important;
+}
+
+/* 6. Trích dẫn Blockquote dạng Callout Học thuật viền trái 4px màu Indigo */
+.ai-prose blockquote {
+    border-left: 4px solid #4f46e5;
+    background: linear-gradient(90deg, rgba(238, 242, 255, 0.85) 0%, rgba(248, 250, 252, 0.6) 100%);
+    padding: 0.65rem 0.95rem;
+    border-radius: 0 0.6rem 0.6rem 0;
+    color: #334155;
+    font-size: 0.865rem;
+    margin: 0.8rem 0;
+}
+
+html.dark .ai-prose blockquote {
+    border-left-color: #818cf8;
+    background: rgba(79, 70, 229, 0.12);
+    color: #cbd5e1;
+}
+
+/* 7. Khối Toán học Display KaTeX căn giữa, cuộn ngang an toàn nếu phương trình dài */
+.ai-math-display {
+    margin: 0.8rem 0;
+    padding: 0.55rem 0.75rem;
+    overflow-x: auto;
+    overflow-y: hidden;
+    border-radius: 0.65rem;
+    background-color: rgba(248, 250, 252, 0.85);
+    border: 1px dashed rgba(148, 163, 184, 0.35);
+    text-align: center;
+}
+
+html.dark .ai-math-display {
+    background-color: rgba(15, 23, 42, 0.65);
+    border-color: rgba(148, 163, 184, 0.2);
+}
+
+.ai-prose hr {
+    border: 0;
+    border-top: 1px dashed #cbd5e1;
+    margin: 0.9rem 0;
+}
+
+html.dark .ai-prose hr {
+    border-top-color: rgba(148, 163, 184, 0.22);
+}
+
+/* Modal Backdrop & Dialog */
+.ss-modal-backdrop {
+    position: fixed;
+    inset: 0;
+    z-index: var(--z-modal-backdrop);
+    background-color: rgba(9, 13, 26, 0.62);
+    backdrop-filter: blur(6px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+}
+
+.ss-modal-backdrop.hidden {
+    display: none;
+}
+
+/* Toast Container nổi góc phải */
+#ss-toast-container {
+    position: fixed;
+    top: 1.15rem;
+    right: 1.15rem;
+    z-index: var(--z-toast);
+    display: flex;
+    flex-direction: column;
+    gap: 0.65rem;
+    max-width: 24rem;
+    width: calc(100vw - 2.3rem);
+    pointer-events: none;
+}
+
+.ss-toast-item {
+    pointer-events: auto;
+    backdrop-filter: blur(12px);
+    box-shadow: var(--shadow-lg);
+}

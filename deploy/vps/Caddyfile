@@ -1,0 +1,44 @@
+# =============================================================================
+# Smart Study Workspace — Caddy Reverse Proxy (Tự động SSL HTTPS Let's Encrypt)
+# - Nếu DOMAIN_NAME=study.yourdomain.com hoặc study.duckdns.org hoặc 1.2.3.4.nip.io:
+#   Caddy tự động xin & gia hạn chứng chỉ TLS HTTPS miễn phí 100%!
+# - Nếu chưa có tên miền (dùng IP thuần): đặt DOMAIN_NAME=:80 trong .env.production
+# =============================================================================
+
+{$DOMAIN_NAME::80} {
+    # Nén siêu nhanh Zstd & Gzip cho HTML, ES6 JS, CSS, JSON
+    encode zstd gzip
+
+    # Header bảo mật chuẩn Production (vẫn cho phép iframe PDF cùng origin)
+    header {
+        X-Content-Type-Options "nosniff"
+        X-Frame-Options "SAMEORIGIN"
+        Referrer-Policy "strict-origin-when-cross-origin"
+        -Server
+    }
+
+    # Chống cache cứng cho OTA Auto-Sync endpoint & Service Worker
+    @noCacheFiles {
+        path /api/system/version /sw.js /manifest.webmanifest /version.json
+    }
+    header @noCacheFiles {
+        Cache-Control "no-store, no-cache, must-revalidate"
+        Pragma "no-cache"
+    }
+
+    # SignalR WebSockets thời gian thực (tắt buffer với flush_interval -1)
+    @signalr path /hubs/*
+    reverse_proxy @signalr backend-core:5000 {
+        flush_interval -1
+        header_up Host {http.request.host}
+        header_up X-Real-IP {remote_host}
+        header_up X-Forwarded-Proto {scheme}
+    }
+
+    # Toàn bộ REST API + Frontend PWA All-in-One trên cổng 5000
+    reverse_proxy backend-core:5000 {
+        header_up Host {http.request.host}
+        header_up X-Real-IP {remote_host}
+        header_up X-Forwarded-Proto {scheme}
+    }
+}

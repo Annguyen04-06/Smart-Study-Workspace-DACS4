@@ -1,0 +1,56 @@
+# =============================================================================
+# Smart Study Workspace — Production All-in-One Backend + Frontend PWA Image
+# Build context: thư mục gốc Monorepo (../..)
+# Phục vụ đồng thời: REST API (/api), SignalR (/hubs), Uploads (/uploads) và
+# toàn bộ Frontend PWA (/frontend) cùng origin trên cổng 5000 phía sau Caddy HTTPS.
+# =============================================================================
+FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
+WORKDIR /src
+
+# Sao chép Solution & các file .csproj trước để tối ưu Docker layer cache
+COPY backend-core/SmartStudy.sln ./backend-core/
+COPY backend-core/src/SmartStudy.Domain/SmartStudy.Domain.csproj ./backend-core/src/SmartStudy.Domain/
+COPY backend-core/src/SmartStudy.Application/SmartStudy.Application.csproj ./backend-core/src/SmartStudy.Application/
+COPY backend-core/src/SmartStudy.Infrastructure/SmartStudy.Infrastructure.csproj ./backend-core/src/SmartStudy.Infrastructure/
+COPY backend-core/src/SmartStudy.API/SmartStudy.API.csproj ./backend-core/src/SmartStudy.API/
+COPY backend-core/tests/SmartStudy.UnitTests/SmartStudy.UnitTests.csproj ./backend-core/tests/SmartStudy.UnitTests/
+
+RUN dotnet restore ./backend-core/SmartStudy.sln
+
+# Sao chép mã nguồn Backend và biên dịch Release
+COPY backend-core/src/ ./backend-core/src/
+RUN dotnet publish ./backend-core/src/SmartStudy.API/SmartStudy.API.csproj \
+    -c Release -o /app/publish /p:UseAppHost=false
+
+# =============================================================================
+# Runtime Stage (ASP.NET Core 8.0 + Frontend PWA tĩnh)
+# =============================================================================
+FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS runtime
+WORKDIR /app
+
+# Cài curl để chạy container healthcheck 24/7
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    curl \
+    && rm -rf /var/lib/apt/lists/*
+
+# Nạp bản build Backend Release
+COPY --from=build /app/publish ./
+
+# Nạp toàn bộ tầng Frontend PWA vào /app/frontend cho All-in-One Host & AppVersionProvider
+COPY frontend/ ./frontend/
+
+# Tạo sẵn thư mục lưu trữ tệp tải lên bền vững
+RUN mkdir -p /app/wwwroot/uploads/materials /app/wwwroot/uploads/avatars
+
+ENV ASPNETCORE_URLS=http://+:5000 \
+    ASPNETCORE_ENVIRONMENT=Production \
+    FrontendHosting__RootPath=/app/frontend
+
+EXPOSE 5000
+
+VOLUME ["/app/wwwroot/uploads"]
+
+HEALTHCHECK --interval=30s --timeout=5s --start-period=25s --retries=3 \
+    CMD curl -fsS http://localhost:5000/api/health || exit 1
+
+ENTRYPOINT ["dotnet", "SmartStudy.API.dll"]

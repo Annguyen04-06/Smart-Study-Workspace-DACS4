@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="170" viewBox="0 0 1200 170" role="img" aria-label="Smart Study Workspace — Nguyễn An — DACS4">
+  <defs>
+    <linearGradient id="wave1" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#6366f1"/><stop offset="0.5" stop-color="#8b5cf6"/><stop offset="1" stop-color="#22d3ee"/>
+    </linearGradient>
+    <linearGradient id="wave2" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#d946ef"/><stop offset="1" stop-color="#6366f1"/>
+    </linearGradient>
+    <style>
+      .font { font-family: 'Segoe UI', 'Inter', 'Helvetica Neue', Arial, sans-serif; }
+      .w1 { animation: slide 9s linear infinite; }
+      .w2 { animation: slide 14s linear infinite reverse; }
+      @keyframes slide { from { transform: translateX(0); } to { transform: translateX(-1200px); } }
+      .beat { transform-box: fill-box; transform-origin: center; animation: beat 1.4s ease-in-out infinite; }
+      @keyframes beat { 0%, 100% { transform: scale(1); } 30% { transform: scale(1.25); } 60% { transform: scale(0.95); } }
+    </style>
+  </defs>
+  <g opacity="0.55" class="w2">
+    <path d="M0 95 C 200 65, 400 125, 600 95 C 800 65, 1000 125, 1200 95 C 1400 65, 1600 125, 1800 95 C 2000 65, 2200 125, 2400 95 V170 H0 Z" fill="url(#wave2)"/>
+  </g>
+  <g class="w1">
+    <path d="M0 110 C 200 80, 400 140, 600 110 C 800 80, 1000 140, 1200 110 C 1400 80, 1600 140, 1800 110 C 2000 80, 2200 140, 2400 110 V170 H0 Z" fill="url(#wave1)"/>
+  </g>
+  <g class="font" text-anchor="middle">
+    <text x="600" y="40" font-size="20" font-weight="800" fill="#6366f1">Smart Study Workspace • DACS4</text>
+    <text x="600" y="68" font-size="15" font-weight="600" fill="#64748b">Thiết kế &amp; phát triển bởi <tspan font-weight="800" fill="#8b5cf6">Nguyễn An</tspan> <tspan class="beat" fill="#ec4899">♥</tspan></text>
+  </g>
+</svg>

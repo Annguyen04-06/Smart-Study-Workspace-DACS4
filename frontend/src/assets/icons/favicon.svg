@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#4f46e5" />
+      <stop offset="50%" stop-color="#6366f1" />
+      <stop offset="100%" stop-color="#7c3aed" />
+    </linearGradient>
+    <linearGradient id="glowGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#38bdf8" stop-opacity="0.9" />
+      <stop offset="100%" stop-color="#c084fc" stop-opacity="0.9" />
+    </linearGradient>
+    <filter id="subtleShadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="8" stdDeviation="16" flood-color="#0f172a" flood-opacity="0.35"/>
+    </filter>
+  </defs>
+
+  <!-- Squircle Base with Soft Shadow -->
+  <rect x="32" y="32" width="448" height="448" rx="112" fill="url(#bgGrad)" filter="url(#subtleShadow)" />
+  
+  <!-- Subtle Internal Border Highlight -->
+  <rect x="34" y="34" width="444" height="444" rx="110" fill="none" stroke="rgba(255,255,255,0.22)" stroke-width="4" />
+
+  <!-- Academic Open Book & AI Neural Sparkle -->
+  <g transform="translate(100, 110)">
+    <!-- Left Book Page -->
+    <path d="M 156 220 C 110 190 40 190 10 200 L 10 70 C 40 60 110 60 156 90 Z" 
+          fill="#ffffff" fill-opacity="0.95" />
+    <!-- Right Book Page -->
+    <path d="M 156 220 C 202 190 272 190 302 200 L 302 70 C 272 60 202 60 156 90 Z" 
+          fill="#ffffff" fill-opacity="0.95" />
+    <!-- Central Spine Highlight -->
+    <line x1="156" y1="85" x2="156" y2="225" stroke="#4338ca" stroke-width="5" stroke-linecap="round"/>
+    
+    <!-- AI Sparkle / Star at top center -->
+    <path d="M 156 0 C 158 24 168 34 192 36 C 168 38 158 48 156 72 C 154 48 144 38 120 36 C 144 34 154 24 156 0 Z" 
+          fill="url(#glowGrad)" />
+    <!-- Mini Satellite Sparkles -->
+    <circle cx="215" cy="18" r="5" fill="#38bdf8" />
+    <circle cx="98" cy="24" r="4" fill="#c084fc" />
+    
+    <!-- Modern Tech Lines on Pages -->
+    <line x1="45" y1="105" x2="120" y2="100" stroke="#818cf8" stroke-width="6" stroke-linecap="round" opacity="0.6"/>
+    <line x1="45" y1="130" x2="110" y2="125" stroke="#818cf8" stroke-width="6" stroke-linecap="round" opacity="0.6"/>
+    <line x1="45" y1="155" x2="125" y2="150" stroke="#818cf8" stroke-width="6" stroke-linecap="round" opacity="0.6"/>
+
+    <line x1="192" y1="100" x2="267" y2="105" stroke="#818cf8" stroke-width="6" stroke-linecap="round" opacity="0.6"/>
+    <line x1="202" y1="125" x2="267" y2="130" stroke="#818cf8" stroke-width="6" stroke-linecap="round" opacity="0.6"/>
+    <line x1="187" y1="150" x2="267" y2="155" stroke="#818cf8" stroke-width="6" stroke-linecap="round" opacity="0.6"/>
+  </g>
+</svg>
